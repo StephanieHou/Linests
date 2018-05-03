@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Link, Switch } from 'react-router-dom';
+import Navigation from '../Navigation/navigation';
 
 import './contact.scss';
 
@@ -13,6 +14,7 @@ class Contact extends React.Component {
     render() {
         return (
             <div>
+                <Navigation />
                 <h1>Contact</h1>
             </div>
         )

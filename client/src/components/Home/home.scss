@@ -1,11 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Berkshire+Swash|Courgette|Lobster+Two');
 .parallax {
-    background-image: url('https://www.gettyimages.ca/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg');
+    background: linear-gradient(270deg, #ff51a2, #e4c1f9, #6ac5f2);
+    background-size: 600% 600%;
+    -webkit-animation: Gradient 19s ease infinite;
+    -moz-animation: Gradient 19s ease infinite;
+    animation: Gradient 19s ease infinite;
     height: 100vh;
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    font-family: 'Courgette', cursive;
+    h1 {
+        font-size: 70px;
+    }
 }
 
 .parallax1 {
@@ -14,8 +25,129 @@
     min-height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    #about {
+        width: 50vw;
+        height: 60vh;
+        z-index: 4;
+        background-color: #6ac5f2;
+        border-radius: 10px;
+        text-align: center;
+        h1 {
+            font-family: 'Courgette', cursive;
+        }
+    }
+}
+
+.parallax2 {
+    background-image: url('../Images/Hiking.png');
+    height: 60vh;
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.parallax3 {
+    background-color: white;
+    height: 70vh;
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    h1 {
+        font-family: 'Courgette', cursive;
+    }
+}
+
+.parallax4 {
+    background-image: url('../Images/Volleyball.jpg');
+    height: 60vh;
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    h1 {
+        font-family: 'Courgette', cursive;
+        color: white;
+    }
+}
+
+.parallax5 {
+    background-image: url('../Images/Sailing.jpg');
+    height: 60vh;
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    h1 {
+        font-family: 'Courgette', cursive;
+        color: white;
+    }
+}
+
+.footer {
+    background-color: white;
+    height: 20vh;
+    min-height: 20vh;
+    display: flex;
+    justify-content: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
 }

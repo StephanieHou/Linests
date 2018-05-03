@@ -28,7 +28,7 @@ class Navigation extends React.Component {
         return (
             <div>
                 <div class="navbar navbar-default navbar-fixed-top">
-                    <div class="navbar-header"><a class="navbar-brand" href="#">Linests</a>
+                    <div class="navbar-header"><Link to={'/'}><a class="navbar-brand logofont">Linests</a></Link>
                         <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
