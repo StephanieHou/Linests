@@ -1,0 +1,193 @@
+.profile {
+    background: #ff51a2;
+    height: 100vh;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    h1 {
+        font-size: 70px;
+        font-family: 'Courgette', cursive;
+    }
+}
+
+#users .wrapper {
+    display: flex;
+    align-items: stretch;
+    perspective: 1500px;
+    a[data-toggle="collapse"] {
+        position: relative;
+    }
+    a[aria-expanded="false"]::before,
+    a[aria-expanded="true"]::before {
+        content: '\e259';
+        display: block;
+        position: absolute;
+        right: 20px;
+        font-family: 'Glyphicons Halflings';
+        font-size: 0.6em;
+    }
+    a[aria-expanded="true"]::before {
+        content: '\e260';
+    }
+    a.download {
+        background: #fff;
+        color: #7386D5;
+    }
+}
+
+/* ---------------------------------------------------
+    Sidebar
+----------------------------------------------------- */
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #FFFCF9;
+    color: transparent;
+    transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+    transform-origin: bottom left;
+    .sidebar-header {
+        padding: 20px;
+        background: #FFFCF9;
+        a {
+            color: #5CA17C;
+            text-transform: uppercase;
+            font-family: 'Courgette', cursive;
+            font-size: 40px;
+            background-image: linear-gradient(to bottom, #FF51A2, #E4C1F9, #6AC5F2);
+            background-size: auto 250%;
+            background-position: 0 100%;
+            transition: background-position 0.5s;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        a:hover {
+            background-position: 0 0;
+        }
+    }
+    ul.components {
+        padding: 20px 0;
+        a {
+            color: #5CA17C;
+            background-image: linear-gradient(to bottom, #FF51A2, #E4C1F9, #6AC5F2);
+            background-size: auto 250%;
+            background-position: 0 100%;
+            transition: background-position 0.5s;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        a:hover {
+            background-position: 0 0;
+        }
+    }
+    ul li a {
+        padding: 10px;
+        font-size: 1.1em;
+        display: block;
+    }
+    ul li.active>a,
+    a[aria-expanded="true"] {
+        color: #fff;
+        background: #6d7fcc;
+    }
+}
+
+#sidebar.active {
+    margin-left: -250px;
+    transform: rotateY(100deg);
+}
+
+#sidebarCollapse {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    outline: none;
+    span {
+        width: 80%;
+        height: 2px;
+        margin: 0 auto;
+        display: block;
+        background: #FFFCF9;
+        transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+        transition-delay: 0.2s;
+    }
+    span:first-of-type {
+        transform: rotate(45deg) translate(2px, 2px);
+    }
+    span:nth-of-type(2) {
+        opacity: 0;
+    }
+    span:last-of-type {
+        transform: rotate(-45deg) translate(1px, -1px);
+    }
+}
+
+#sidebarCollapse.active span {
+    transform: none;
+    opacity: 1;
+    margin: 5px auto;
+}
+
+/* ---------------------------------------------------
+    Content
+----------------------------------------------------- */
+
+#content {
+    padding: 0px;
+    margin: 0px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    .navbar {
+        background-color: transparent;
+        border: none;
+        position: fixed;
+    }
+}
+
+/* ---------------------------------------------------
+    Changing Components
+----------------------------------------------------- */
+
+
+
+/* ---------------------------------------------------
+    Media Queries
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+        transform: rotateY(90deg);
+    }
+    #sidebar.active {
+        margin-left: 0;
+        transform: none;
+    }
+    #sidebarCollapse span:first-of-type,
+    #sidebarCollapse span:nth-of-type(2),
+    #sidebarCollapse span:last-of-type {
+        transform: none;
+        opacity: 1;
+        margin: 5px auto;
+    }
+    #sidebarCollapse.active {
+        span {
+            margin: 0 auto;
+        }
+        span:first-of-type {
+            transform: rotate(45deg) translate(2px, 2px);
+        }
+        span:nth-of-type(2) {
+            opacity: 0;
+        }
+        span:last-of-type {
+            transform: rotate(-45deg) translate(1px, -1px);
+        }
+    }
+}

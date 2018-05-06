@@ -50,3 +50,19 @@
         }
     }
 }
+
+/* ---------------------------------------------------
+    Footer
+----------------------------------------------------- */
+
+.footer {
+    background-color: white;
+    height: 20vh;
+    min-height: 20vh;
+    display: flex;
+    justify-content: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

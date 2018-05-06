@@ -26,7 +26,7 @@ class App extends React.Component {
     const { loading } = this.state;
     if (loading) {
       return (
-        <div>Loading</div>
+        <div class="loading">Loading</div>
       )
     }
 
@@ -36,6 +36,7 @@ class App extends React.Component {
         <Route exact path="/login" render={props => (<Login />)} />
         <Route exact path="/signup" render={props => (<Signup />)} />
         <Route exact path="/contact" render={props => (<Contact />)} />
+        <Route path="/userprofile" render={props => (<Users />)} />
       </div>
     );
   }

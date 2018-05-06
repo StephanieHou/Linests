@@ -9,6 +9,7 @@ class Navigation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoggedIn: true
         }
     }
     componentDidMount() {
@@ -19,12 +20,12 @@ class Navigation extends React.Component {
 
                 var $parent = $(this).parent();
                 $parent.addClass('active');
-                // e.preventDefault();
             });
         });
     }
 
     render() {
+        const { isLoggedIn } = this.state;
         return (
             <div>
                 <div class="navbar navbar-default navbar-fixed-top">
@@ -35,12 +36,30 @@ class Navigation extends React.Component {
                             <span class="icon-bar"></span>
                         </a>
                     </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav pull-right">
-                            <li><Link to={'/signup'}><a>Sign Up</a></Link></li>
-                            <li><Link to={'/login'}><a>Log In</a></Link></li>
-                        </ul>
-                    </div>
+                    {isLoggedIn ?
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav pull-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><Link to={'/userprofile/account'}><a>Summary</a></Link></li>
+                                        <li><Link to={'/userprofile/matches'}><a>Matches</a></Link></li>
+                                        <li><Link to={'/userprofile/friends'}><a>Friends</a></Link></li>
+                                        <li><Link to={'/userprofile/settings'}><a>Settings</a></Link></li>
+                                    </ul>
+                                </li>
+                                <li><Link to={'/login'}><a>Log Out</a></Link></li>
+                            </ul>
+                        </div>
+                        :
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav pull-right">
+                                <li><Link to={'/signup'}><a>Sign Up</a></Link></li>
+                                <li><Link to={'/login'}><a>Log In</a></Link></li>
+                            </ul>
+                        </div>
+
+                    }
                 </div>
 
 

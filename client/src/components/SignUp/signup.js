@@ -11,7 +11,7 @@ class Signup extends React.Component {
         this.state = {
         }
     };
-    
+
     componentDidMount() {
         var strength1 = 50;
         var strength2 = 100;
@@ -41,6 +41,8 @@ class Signup extends React.Component {
                     </div>
                     <div id="foreground">
                     </div>
+                </div>
+                <div class="footer">
                 </div>
             </div>
         )

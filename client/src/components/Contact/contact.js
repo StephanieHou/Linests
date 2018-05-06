@@ -15,7 +15,11 @@ class Contact extends React.Component {
         return (
             <div>
                 <Navigation />
-                <h1>Contact</h1>
+                <div class="contact">
+                    <div>
+                        <h1>Contact</h1>
+                    </div>
+                </div>
             </div>
         )
     }

@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Berkshire+Swash|Courgette|Lobster+Two');
+/* ---------------------------------------------------
+    Parallax
+----------------------------------------------------- */
+
 .parallax {
     background: linear-gradient(270deg, #ff51a2, #e4c1f9, #6ac5f2);
     background-size: 600% 600%;
@@ -17,10 +21,70 @@
     h1 {
         font-size: 70px;
     }
+    .demo a {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        z-index: 2;
+        display: inline-block;
+        -webkit-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+        color: #fff;
+        font: normal 400 20px/1 'Josefin Sans', sans-serif;
+        letter-spacing: .1em;
+        text-decoration: none;
+        transition: opacity .3s;
+    }
+    .demo a:hover {
+        opacity: .5;
+    }
+    #section03 a {
+        padding-top: 60px;
+    }
+    #section03 a span {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 46px;
+        height: 46px;
+        margin-left: -23px;
+        border: 1px solid #fff;
+        border-radius: 100%;
+        box-sizing: border-box;
+    }
+    #section03 a span::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        content: '';
+        width: 16px;
+        height: 16px;
+        margin: -12px 0 0 -8px;
+        border-left: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        box-sizing: border-box;
+    }
+    #section03 a span::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        content: '';
+        width: 44px;
+        height: 44px;
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, .1);
+        border-radius: 100%;
+        opacity: 0;
+        -webkit-animation: sdb03 3s infinite;
+        animation: sdb03 3s infinite;
+        box-sizing: border-box;
+    }
 }
 
 .parallax1 {
-    background-color: white;
+    background-image: url('../Images/Hiking.png');
     height: 100vh;
     min-height: 100vh;
     display: flex;
@@ -29,12 +93,12 @@
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
     #about {
         width: 50vw;
         height: 60vh;
         z-index: 4;
-        background-color: #6ac5f2;
+        background-color: white;
         border-radius: 10px;
         text-align: center;
         h1 {
@@ -44,33 +108,67 @@
 }
 
 .parallax2 {
-    background-image: url('../Images/Hiking.png');
-    height: 60vh;
-    min-height: 60vh;
+    background-color: white;
+    height: 240vh;
+    min-height: 240vh;
     display: flex;
     justify-content: center;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-}
-
-.parallax3 {
-    background-color: white;
-    height: 70vh;
-    min-height: 70vh;
-    display: flex;
-    justify-content: center;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     h1 {
         font-family: 'Courgette', cursive;
+        margin: 40px;
+    }
+    .container {
+        text-align: center;
+        .col-xs-8 {
+            div {
+                position: relative;
+                margin: 25px;
+                margin-top: 60px;
+                background-color: #e4c1f9;
+                width: 20vw;
+                height: 38vh;
+                padding: 20px;
+                z-index: 10;
+                h3 {
+                    font-size: 16px;
+                }
+            }
+            .backimg {
+                position: absolute;
+                top: 0;
+                width: 25vw;
+                height: 60vh;
+                background-size: 100% 100%;
+                z-index: 0;
+            }
+            #step1 {
+                right: 80px;
+                background-image: url('../Images/Hiking.png');
+            }
+            #step2 {
+                left: 80px;
+                background-image: url('../Images/Basketball.jpg');
+            }
+            #step3 {
+                right: 80px;
+                background-image: url('../Images/Hanging.jpg');
+            }
+            #step4 {
+                left: 80px;
+                background-image: url('../Images/Hiking.png');
+            }
+            .animation-element:hover {
+                margin-top: 5px;
+            }
+        }
     }
 }
 
-.parallax4 {
+.parallax3 {
     background-image: url('../Images/Volleyball.jpg');
     height: 60vh;
     min-height: 60vh;
@@ -81,13 +179,15 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    h1 {
+    a {
         font-family: 'Courgette', cursive;
         color: white;
+        font-size: 60px;
+        text-shadow: 2px 2px 0 #000, 0px 0px 0 #000, 0px 0px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
 }
 
-.parallax5 {
+.parallax4 {
     background-image: url('../Images/Sailing.jpg');
     height: 60vh;
     min-height: 60vh;
@@ -98,11 +198,17 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    h1 {
+    a {
         font-family: 'Courgette', cursive;
         color: white;
+        font-size: 60px;
+        text-shadow: 2px 2px 0 #000, 0px 0px 0 #000, 0px 0px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
 }
+
+/* ---------------------------------------------------
+    Footer
+----------------------------------------------------- */
 
 .footer {
     background-color: white;
@@ -110,10 +216,40 @@
     min-height: 20vh;
     display: flex;
     justify-content: center;
+    align-items: center;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+/* ---------------------------------------------------
+    Animation
+----------------------------------------------------- */
+
+.bounce-up {
+    opacity: 0;
+    -moz-transition: all 700ms ease-out;
+    -webkit-transition: all 700ms ease-out;
+    -o-transition: all 700ms ease-out;
+    transition: all 700ms ease-out;
+    -moz-transform: translate3d(0px, 200px, 0px);
+    -webkit-transform: translate3d(0px, 200px, 0px);
+    -o-transform: translate(0px, 200px);
+    -ms-transform: translate(0px, 200px);
+    transform: translate3d(0px, 200, 0px);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.bounce-up.in-view {
+    opacity: 1;
+    -moz-transform: translate3d(0px, 0px, 0px);
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    -o-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+    transform: translate3d(0px, 0px, 0px);
 }
 
 @-webkit-keyframes Gradient {
@@ -149,5 +285,37 @@
     }
     100% {
         background-position: 0% 50%
+    }
+}
+
+@-webkit-keyframes sdb03 {
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    60% {
+        box-shadow: 0 0 0 60px rgba(255, 255, 255, .1);
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes sdb03 {
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    60% {
+        box-shadow: 0 0 0 60px rgba(255, 255, 255, .1);
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
     }
 }

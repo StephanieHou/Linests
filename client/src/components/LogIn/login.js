@@ -43,6 +43,8 @@ class Login extends React.Component {
                     <div id="foreground">
                     </div>
                 </div>
+                <div class="footer">
+                </div>
             </div>
         )
     }
