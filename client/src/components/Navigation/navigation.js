@@ -48,7 +48,7 @@ class Navigation extends React.Component {
                                         <li><Link to={'/userprofile/settings'}><a>Settings</a></Link></li>
                                     </ul>
                                 </li>
-                                <li><Link to={'/login'}><a>Log Out</a></Link></li>
+                                <li><Link to={'/logout'}><a>Log Out</a></Link></li>
                             </ul>
                         </div>
                         :
@@ -58,11 +58,8 @@ class Navigation extends React.Component {
                                 <li><Link to={'/login'}><a>Log In</a></Link></li>
                             </ul>
                         </div>
-
                     }
                 </div>
-
-
             </div>
         )
     }

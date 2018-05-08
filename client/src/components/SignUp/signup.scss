@@ -39,30 +39,41 @@
         opacity: .25;
     }
     #signform {
-        width: 40vw;
-        height: 70vh;
+        width: 30vw;
+        height: 65vh;
         z-index: 4;
         background-color: white;
         border-radius: 10px;
         text-align: center;
+        z-index: 4;
+        background-color: rgba(255, 255, 255, 0.651);
+        border-radius: 10px;
+        text-align: center;
+        a {
+            color: black;
+        }
         h1 {
             font-family: 'Courgette', cursive;
         }
+        #formstyle {
+            overflow-y: scroll;
+            height:30vh;
+            input {
+                border-radius: 5px;
+                height: 6vh;
+                width: 20vw;
+            }
+        }
+        input[type="submit"] {
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            padding: 7px;
+            width: 20vw;
+            &:hover {
+                background-color: #e4c1f9;
+                color: black;
+            }
+        }
     }
-}
-
-/* ---------------------------------------------------
-    Footer
------------------------------------------------------ */
-
-.footer {
-    background-color: white;
-    height: 20vh;
-    min-height: 20vh;
-    display: flex;
-    justify-content: center;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }

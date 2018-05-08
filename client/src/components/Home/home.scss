@@ -1,5 +1,61 @@
 @import url('https://fonts.googleapis.com/css?family=Berkshire+Swash|Courgette|Lobster+Two');
 /* ---------------------------------------------------
+    Colors
+----------------------------------------------------- */
+
+.pink {
+    background-color: #ff51a2;
+    color: white;
+}
+
+.purple {
+    background-color: #e4c1f9;
+    color: white;
+}
+
+.blue {
+    background-color: #55b1df;
+    color: white;
+}
+
+/* ---------------------------------------------------
+    Side Nav
+----------------------------------------------------- */
+
+#mySidenav a {
+    position: fixed;
+    margin-top: 40vh;
+    left: -68px;
+    transition: 0.3s;
+    padding: 15px;
+    width: 100px;
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    font-family: 'Courgette', cursive;
+}
+
+#mySidenav a:hover {
+    left: 0;
+}
+
+#sideOne {
+    top: 20px;
+    background-color: #ff51a2;
+}
+
+#sideTwo {
+    top: 80px;
+    background-color: #e4c1f9;
+}
+
+#sideThree {
+    top: 140px;
+    background-color: #55b1df;
+}
+
+/* ---------------------------------------------------
     Parallax
 ----------------------------------------------------- */
 
@@ -30,7 +86,6 @@
         -webkit-transform: translate(0, -50%);
         transform: translate(0, -50%);
         color: #fff;
-        font: normal 400 20px/1 'Josefin Sans', sans-serif;
         letter-spacing: .1em;
         text-decoration: none;
         transition: opacity .3s;
@@ -95,14 +150,18 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     #about {
-        width: 50vw;
-        height: 60vh;
+        width: 40vw;
+        height: 50vh;
         z-index: 4;
         background-color: white;
         border-radius: 10px;
         text-align: center;
         h1 {
             font-family: 'Courgette', cursive;
+        }
+        h3 {
+            margin: 30px;
+            font-size: 18px;
         }
     }
 }
@@ -128,7 +187,6 @@
                 position: relative;
                 margin: 25px;
                 margin-top: 60px;
-                background-color: #e4c1f9;
                 width: 20vw;
                 height: 38vh;
                 padding: 20px;
@@ -147,7 +205,7 @@
             }
             #step1 {
                 right: 80px;
-                background-image: url('../Images/Hiking.png');
+                background-image: url('../Images/Beach.jpg');
             }
             #step2 {
                 left: 80px;
@@ -159,7 +217,7 @@
             }
             #step4 {
                 left: 80px;
-                background-image: url('../Images/Hiking.png');
+                background-image: url('../Images/Boardgames.jpg');
             }
             .animation-element:hover {
                 margin-top: 5px;

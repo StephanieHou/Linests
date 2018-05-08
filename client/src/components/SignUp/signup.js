@@ -9,6 +9,8 @@ class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: "",
+            password: ""
         }
     };
 
@@ -27,13 +29,62 @@ class Signup extends React.Component {
         });
     }
 
+    handleEmail = e => {
+        this.setState({
+            username: e.target.value
+        });
+    };
+
+    handlePassword = e => {
+        this.setState({
+            password: e.target.value
+        });
+    };
+
+    submitForm = e => {
+        e.preventDefault();
+    }
+
     render() {
+        const { username, password} = this.state;
         return (
             <div>
                 <Navigation />
                 <div class="signup">
                     <div id="signform">
-                        <h1>Sign Up</h1>
+                        <div>
+                            <h1>Sign Up</h1>
+                            <p>Please Fill Out All Information</p>
+                            <form onSubmit={this.submitForm}>
+                                <div id="formstyle">
+                                    <label>
+                                        <input type="text" name="username" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Please give a valid username" value={username} onChange={this.handleEmail} />
+                                    </label>
+                                    <br />
+                                    <label>
+                                        <input type="password" name="password" placeholder="Password" pattern=".{8,}" title="Eight or more characters" value={password} onChange={this.handlePassword} />
+                                    </label>
+                                    <br />
+                                    <label>
+                                        <input type="text" name="username" placeholder="First Name" value={username} onChange={this.handleEmail} />
+                                    </label>
+                                    <br />
+                                    <label>
+                                        <input type="text" name="username" placeholder="Last Name" value={username} onChange={this.handleEmail} />
+                                    </label>
+                                    <br />
+                                    <label>
+                                        <input type="text" name="username" placeholder="Address" value={username} onChange={this.handleEmail} />
+                                    </label>
+                                </div>
+                                <br />
+                                <input type="submit" value="Submit" />
+                            </form>
+                            <br />
+                            <Link to={`/login`}>
+                                <a>Already A User? Log In Here</a>
+                            </Link>
+                        </div>
                     </div>
                     <div id="background">
                     </div>
@@ -41,8 +92,6 @@ class Signup extends React.Component {
                     </div>
                     <div id="foreground">
                     </div>
-                </div>
-                <div class="footer">
                 </div>
             </div>
         )

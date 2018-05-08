@@ -9,4 +9,46 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    #cform {
+        width: 40vw;
+        height: 65vh;
+        z-index: 4;
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 4;
+        background-color: rgba(255, 255, 255, 0.651);
+        border-radius: 10px;
+        text-align: center;
+        a {
+            color: black;
+        }
+        h1 {
+            font-family: 'Courgette', cursive;
+        }
+        #formstyle {
+            height: 35vh;
+            input {
+                border-radius: 5px;
+                height: 6vh;
+                width: 30vw;
+            }
+            textarea {
+                border-radius: 5px;
+                height: 20vh;
+                width: 30vw;
+            }
+        }
+        input[type="submit"] {
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            padding: 7px;
+            width: 30vw;
+            &:hover {
+                background-color: #e4c1f9;
+                color: black;
+            }
+        }
+    }
 }
