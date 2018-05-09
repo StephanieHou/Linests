@@ -9,12 +9,13 @@
         transition: background-position 0.5s;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        &:hover {
+            background-position: 0 0;
+        }
     }
     .logofont {
         font-family: 'Courgette', cursive;
-    }
-    a:hover {
-        background-position: 0 0;
+        font-size: 25px;
     }
 }
 

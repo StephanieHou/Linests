@@ -78,8 +78,29 @@ class Home extends React.Component {
                     </div>
                 </div>
                 <div class="parallax">
-                    <h1>Linests</h1>
-                    <div id="section03" class="demo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+                        <defs>
+                            <clipPath id="_clipPath_WO9zGlmSbLtJvrrta7kb2DkLZDcAdPOO">
+                                <rect width="500" height="500" />
+                            </clipPath>
+                        </defs>
+                        <g clip-path="url(#_clipPath_WO9zGlmSbLtJvrrta7kb2DkLZDcAdPOO)">
+                            <rect width="500" height="500" fill="none" />
+                            <path class="fadeIn" d=" M 384 119 C 215 122.667 126.657 211.01 119 384 M 384 119 C 239 144 150.657 232.343 119 384" fill-rule="evenodd" fill="rgb(255,255,255)" />
+                            <path class="fadeIn" d=" M 119 119 C 288 122.667 376.343 211.01 384 384 M 119 119 C 264 144 352.343 232.343 384 384" fill-rule="evenodd" fill="rgb(255,255,255)" />
+                            <path class="fadeIn" d=" M 119 384 C 288 380.333 376.343 291.99 384 119 M 119 384 C 264 359 352.343 270.657 384 119" fill-rule="evenodd" fill="rgb(255,255,255)" />
+                            <path class="fadeIn" d=" M 384 384 C 215 380.333 126.657 291.99 119 119 M 384 384 C 239 359 150.657 270.657 119 119" fill-rule="evenodd" fill="rgb(255,255,255)" />
+                            <path class="fadeIn" d=" M 62.629 251.5 C 183.398 133.224 308.326 131.816 437.371 247.278 M 62.629 251.5 C 181.873 165.298 306.802 163.891 437.371 247.278" fill-rule="evenodd" fill="rgb(255,255,255)" />
+                            <path class="fadeIn" d=" M 62.628 255.624 C 185.97 371.214 310.899 369.872 437.372 251.598 M 62.628 255.624 C 183.74 339.18 308.669 337.838 437.372 251.598" fill-rule="evenodd" fill="rgb(255,255,255)" />
+                            <path class="fadeIn" d=" M 249.977 438.894 C 131.701 318.125 130.293 193.197 245.755 64.152 M 249.977 438.894 C 163.775 319.65 162.368 194.721 245.755 64.152" fill-rule="evenodd" fill="rgb(255,255,255)" />
+                            <path class="fadeIn" d=" M 254.101 438.895 C 369.691 315.553 368.349 190.624 250.075 64.15 M 254.101 438.895 C 337.657 317.783 336.315 192.854 250.075 64.15" fill-rule="evenodd" fill="rgb(255,255,255)" />
+                            <path class="spin" d=" M 57.291 251.598 C 57.291 146.5 143.631 61.174 249.977 61.174 C 356.323 61.174 442.663 146.5 442.663 251.598 C 442.663 356.696 356.323 442.022 249.977 442.022 C 143.631 442.022 57.291 356.696 57.291 251.598 Z " fill="none" vector-effect="non-scaling-stroke" stroke-width="5" stroke-dasharray="1,10" stroke="rgb(255,255,255)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="3" />
+                            <g transform="matrix(1,0,0,1,0,167)">
+                                <text id="homeheader" transform="matrix(1,0,0,1,51.334,126.953)" fill="#000000" stroke="none">Linests</text>
+                            </g>
+                        </g>
+                    </svg>
+                    <div id="scrollbtn" class="demo">
                         <a href="#first" id="button"><span></span></a>
                     </div>
                 </div>
@@ -87,18 +108,21 @@ class Home extends React.Component {
                     <div id="about" class="animation-element bounce-up">
                         <h1 class="animation-element bounce-up">Our Story</h1>
                         <h3 class="animation-element bounce-up">The idea started when we realized that sometimes we have interests that none of our friends have. We have different friend groups for different reasons. Why not make the process of finding new friends that share certain interests a lot easier?
-                        <br/> <br /> With Linests, you can now find new people to do things with that you do not want to be alone and feel secure about it!</h3>
+                        <br /> <br /> With Linests, you can now find new people to do things with that you do not want to be alone and feel secure about it!</h3>
                     </div>
                 </div>
                 <div class="parallax2" id="second">
                     <div class="container">
                         <div class="row">
                             <div class="col">
-                                <h1 class="animation-element bounce-up">How Does Linests Work?</h1>
+                                <h1 class="animation-element bounce-up" id="title">How Does Linests Work?</h1>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-10 col-md-6">
+                                <div class="animation-element bounce-up blue" >
+                                    <h3>We have a few steps you can follow!</h3>
+                                </div>
                             </div>
                             <div class="col-xs-8 col-md-6 pull-right">
                                 <div class="animation-element bounce-up pink" >
@@ -139,6 +163,9 @@ class Home extends React.Component {
                                 <p class="backimg animation-element bounce-up" id="step4"></p>
                             </div>
                             <div class="col-xs-10 col-md-6">
+                                <div class="animation-element bounce-up purple" id="lastStep">
+                                    <h3>Now you are ready to Linests!</h3>
+                                </div>
                             </div>
                         </div>
                     </div>

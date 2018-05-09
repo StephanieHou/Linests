@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Link, Switch } from 'react-router-dom';
 import $ from 'jquery';
 import * as ReactBootstrap from 'react-bootstrap';
+import Logo from '../Images/ColorLogo.png'
 
 import './navigation.scss';
 

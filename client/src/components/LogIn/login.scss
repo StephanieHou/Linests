@@ -15,8 +15,8 @@
         height: 100vh;
         width: 100vw;
         z-index: 1;
-        background: url('../Images/Hobby.png');
-        background-size: 30% 30%;
+        background: url('../Images/Goals.png');
+        background-size: 35% 35%;
     }
     #middleground {
         position: absolute;
@@ -24,7 +24,7 @@
         height: 100vh;
         width: 100vw;
         z-index: 2;
-        background: url('../Images/Hobby.png');
+        background: url('../Images/Match.png');
         background-size: 20% 20%;
         opacity: .5;
     }
@@ -34,7 +34,7 @@
         height: 100vh;
         width: 100vw;
         z-index: 3;
-        background: url('../Images/Hobby.png');
+        background: url('../Images/Interests.png');
         background-size: 10% 10%;
         opacity: .25;
     }
@@ -42,7 +42,7 @@
         width: 30vw;
         height: 40vh;
         z-index: 4;
-        background-color: rgba(255, 255, 255, 0.651);
+        background-color: rgba(255, 255, 255, 0.781);
         border-radius: 10px;
         text-align: center;
         a{

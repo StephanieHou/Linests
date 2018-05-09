@@ -34,10 +34,9 @@
     color: white;
     border-radius: 0 5px 5px 0;
     font-family: 'Courgette', cursive;
-}
-
-#mySidenav a:hover {
-    left: 0;
+    &:hover {
+        left: 0;
+    }
 }
 
 #sideOne {
@@ -74,8 +73,15 @@
     background-position: center;
     background-repeat: no-repeat;
     font-family: 'Courgette', cursive;
-    h1 {
-        font-size: 70px;
+    #homeheader {
+        font-weight: 400;
+        font-size: 130px;
+        font-style: normal;
+        stroke-dasharray: 3000;
+        stroke-dashoffset: 3000;
+        animation: dash 4000ms ease-in-out forwards;
+        fill: transparent;
+        stroke: black;
     }
     .demo a {
         position: absolute;
@@ -89,52 +95,52 @@
         letter-spacing: .1em;
         text-decoration: none;
         transition: opacity .3s;
+        &:hover {
+            opacity: .5;
+        }
     }
-    .demo a:hover {
-        opacity: .5;
-    }
-    #section03 a {
+    #scrollbtn a {
         padding-top: 60px;
-    }
-    #section03 a span {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 46px;
-        height: 46px;
-        margin-left: -23px;
-        border: 1px solid #fff;
-        border-radius: 100%;
-        box-sizing: border-box;
-    }
-    #section03 a span::after {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        content: '';
-        width: 16px;
-        height: 16px;
-        margin: -12px 0 0 -8px;
-        border-left: 1px solid #fff;
-        border-bottom: 1px solid #fff;
-        -webkit-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-        box-sizing: border-box;
-    }
-    #section03 a span::before {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        content: '';
-        width: 44px;
-        height: 44px;
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, .1);
-        border-radius: 100%;
-        opacity: 0;
-        -webkit-animation: sdb03 3s infinite;
-        animation: sdb03 3s infinite;
-        box-sizing: border-box;
+        span {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 46px;
+            height: 46px;
+            margin-left: -23px;
+            border: 1px solid #fff;
+            border-radius: 100%;
+            box-sizing: border-box;
+        }
+        span::after {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            content: '';
+            width: 16px;
+            height: 16px;
+            margin: -12px 0 0 -8px;
+            border-left: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            box-sizing: border-box;
+        }
+        span::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            content: '';
+            width: 44px;
+            height: 44px;
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, .1);
+            border-radius: 100%;
+            opacity: 0;
+            -webkit-animation: headerscroll 3s infinite;
+            animation: headerscroll 3s infinite;
+            box-sizing: border-box;
+        }
     }
 }
 
@@ -168,10 +174,11 @@
 
 .parallax2 {
     background-color: white;
-    height: 240vh;
-    min-height: 240vh;
+    height: 245vh;
+    min-height: 245vh;
     display: flex;
     justify-content: center;
+    text-align: center;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -180,8 +187,31 @@
         font-family: 'Courgette', cursive;
         margin: 40px;
     }
+    #title {
+        border: 5px double white;
+        padding: 5px;
+        background-image: linear-gradient(to left, #FF51A2, #E4C1F9, #6AC5F2);
+        background-size: auto 150%;
+        background-position: 0 100%;
+        color: white;
+    }
     .container {
         text-align: center;
+        .col-xs-10 {
+            display: flex;
+            justify-content: center;
+            div {
+                margin-top: 10vh;
+                width: 20vw;
+                height: 20vh;
+                font-family: 'Courgette', cursive;
+                padding: 11px;
+                border: 6px double white;
+            }
+            #lastStep {
+                margin-top: 25vh;
+            }
+        }
         .col-xs-8 {
             div {
                 position: relative;
@@ -198,8 +228,8 @@
             .backimg {
                 position: absolute;
                 top: 0;
-                width: 25vw;
-                height: 60vh;
+                width: 30vw;
+                height: 66vh;
                 background-size: 100% 100%;
                 z-index: 0;
             }
@@ -346,7 +376,7 @@
     }
 }
 
-@-webkit-keyframes sdb03 {
+@-webkit-keyframes headerscroll {
     0% {
         opacity: 0;
     }
@@ -362,7 +392,7 @@
     }
 }
 
-@keyframes sdb03 {
+@keyframes headerscroll {
     0% {
         opacity: 0;
     }
@@ -375,5 +405,139 @@
     }
     100% {
         opacity: 0;
+    }
+}
+
+.spin {
+    animation: spin 5s linear;
+    transform-origin: center;
+}
+
+svg:hover .spin {
+    animation: spin 2s infinite;
+}
+
+.fadeIn {
+    animation: FadeIn 5s linear alternate;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    transition: fill 1s ease-in-out;
+    fill: transparent;
+    &:nth-child(2) {
+        &:hover {
+            animation: fillInRed 0.5s linear alternate;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+    }
+    &:nth-child(3) {
+        animation-delay: 3s;
+        &:hover {
+            animation: fillInRed 0.5s linear alternate;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+    }
+    &:nth-child(4) {
+        animation-delay: 2s;
+        &:hover {
+            animation: fillInBlue 0.5s linear alternate;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+    }
+    &:nth-child(5) {
+        animation-delay: 3.5s;
+        &:hover {
+            animation: fillInBlue 0.5s linear alternate;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+    }
+    &:nth-child(6) {
+        animation-delay: 1s;
+        &:hover {
+            animation: fillInPurple 0.5s linear alternate;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+    }
+    &:nth-child(7) {
+        animation-delay: 1.5s;
+        &:hover {
+            animation: fillInRed 0.5s linear alternate;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+    }
+    &:nth-child(8) {
+        animation-delay: 0.5s;
+        &:hover {
+            animation: fillInBlue 0.5s linear alternate;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+    }
+    &:nth-child(9) {
+        animation-delay: 2.5s;
+        &:hover {
+            animation: fillInPurple 0.5s linear alternate;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+    }
+}
+
+@keyframes fillInRed {
+    to {
+        fill: #ff51a2;
+    }
+}
+
+@keyframes fillInBlue {
+    to {
+        fill: #6ac5f2;
+    }
+}
+
+@keyframes fillInPurple {
+    to {
+        fill: #e4c1f9;
+    }
+}
+
+@keyframes FadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        fill: white;
+    }
+}
+
+@keyframes FadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        fill: white;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+        fill: black;
     }
 }
