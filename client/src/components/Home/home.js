@@ -28,7 +28,6 @@ class Home extends React.Component {
                 var element_top_position = $element.offset().top;
                 var element_bottom_position = (element_top_position + element_height);
 
-                //check to see if this current container is within viewport
                 if ((element_bottom_position >= window_top_position) &&
                     (element_top_position <= window_bottom_position)) {
                     $element.addClass('in-view');
@@ -72,9 +71,9 @@ class Home extends React.Component {
                 <Navigation />
                 <div id="side">
                     <div id="mySidenav" class="sidenav">
-                        <a href="#first" id="sideOne">About</a>
-                        <a href="#second" id="sideTwo">Steps</a>
-                        <a href="#fourth" id="sideThree">Contact</a>
+                        <a href="#first" id="sideOne" class="pink">About</a>
+                        <a href="#second" id="sideTwo" class="purple">Steps</a>
+                        <a href="#fourth" id="sideThree" class="blue">Contact</a>
                     </div>
                 </div>
                 <div class="parallax">

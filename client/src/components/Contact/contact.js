@@ -36,7 +36,7 @@ class Contact extends React.Component {
     }
 
     render() {
-        const { username, password, issue, comments } = this.state;
+        const { username, issue, comments } = this.state;
         return (
             <div>
                 <Navigation />

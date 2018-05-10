@@ -10,8 +10,8 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username:'',
-            password:''
+            username: '',
+            password: ''
         }
     };
     componentDidMount() {
@@ -21,8 +21,6 @@ class Login extends React.Component {
         $("html").mousemove(function (e) {
             var pageX = e.pageX - ($(window).width() / 2);
             var pageY = e.pageY - ($(window).height() / 2);
-            var newvalueX = 1 * pageX * -1;
-            var newvalueY = 1 * pageY * -1;
             $('#background').css("background-position", (strength1 / $(window).width() * pageX * -1) + "px " + (strength1 / $(window).height() * pageY * -1) + "px");
             $('#middleground').css("background-position", (strength2 / $(window).width() * pageX * -1) + "px " + (strength2 / $(window).height() * pageY * -1) + "px");
             $('#foreground').css("background-position", (strength3 / $(window).width() * pageX * -1) + "px " + (strength3 / $(window).height() * pageY * -1) + "px");
@@ -30,22 +28,22 @@ class Login extends React.Component {
     }
     handleEmail = e => {
         this.setState({
-          username: e.target.value
+            username: e.target.value
         });
-      };
+    };
 
-      handlePassword = e => {
+    handlePassword = e => {
         this.setState({
-          password: e.target.value
+            password: e.target.value
         });
-      };
+    };
 
     submitForm = e => {
         e.preventDefault();
     }
 
     render() {
-        const { username, password} = this.state;
+        const { username, password } = this.state;
         return (
             <div>
                 <Navigation />

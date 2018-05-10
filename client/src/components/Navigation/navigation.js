@@ -16,9 +16,7 @@ class Navigation extends React.Component {
     componentDidMount() {
         $(document).ready(function () {
             $('.nav li a').click(function (e) {
-
                 $('.nav li.active').removeClass('active');
-
                 var $parent = $(this).parent();
                 $parent.addClass('active');
             });
@@ -30,7 +28,7 @@ class Navigation extends React.Component {
         return (
             <div>
                 <div class="navbar navbar-default navbar-fixed-top">
-                    <div class="navbar-header"><Link to={'/'}> <img class="navbar-brand" src={Logo}/> <a class="navbar-brand logofont">Linests</a></Link>
+                    <div class="navbar-header"><Link to={'/'}> <img class="navbar-brand" src={Logo} alt="logo" /> <a class="navbar-brand logofont">Linests</a></Link>
                         <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -41,7 +39,7 @@ class Navigation extends React.Component {
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav pull-right">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><Link to={'/userprofile/account'}><a>Summary</a></Link></li>
                                         <li><Link to={'/userprofile/matches'}><a>Matches</a></Link></li>

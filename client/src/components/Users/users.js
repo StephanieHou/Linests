@@ -6,7 +6,7 @@ import Navigation from '../Navigation/navigation';
 
 import './users.scss';
 
-const Account = e => {
+const Account = ({ photo, name, about, location, birthday, facebook, interests }) => {
     return (
         <div class="information">
             <div class="container">
@@ -16,11 +16,11 @@ const Account = e => {
                             <div class="propic"></div>
                             <br />
                             <div class="proinfo">
-                                <p>Name:sefsefs </p>
-                                <p>About: sefsefe</p>
-                                <p>Location: sefse</p>
-                                <p>Interests: sefse</p>
-                                <p>Facebook: sefsef</p>
+                                <p>Name: {name} </p>
+                                <p>About: {about}</p>
+                                <p>Location: {location}</p>
+                                <p>Birthday: {birthday}</p>
+                                <p>Facebook: {facebook}</p>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ const Account = e => {
     );
 };
 
-const Matches = ({ match }) => {
+const Matches = ({ photo, name, about, location, birthday, facebook, matches }) => {
     return (
         <div class="information">
             <div class="container">
@@ -63,11 +63,11 @@ const Matches = ({ match }) => {
                             <div class="propic"></div>
                             <br />
                             <div class="proinfo">
-                                <p>Name:sefsefs </p>
-                                <p>About: sefsefe</p>
-                                <p>Location: sefse</p>
-                                <p>Interests: sefse</p>
-                                <p>Facebook: sefsef</p>
+                                <p>Name: {name} </p>
+                                <p>About: {about}</p>
+                                <p>Location: {location}</p>
+                                <p>Birthday: {birthday}</p>
+                                <p>Facebook: {facebook}</p>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@ const Matches = ({ match }) => {
     );
 };
 
-const Friends = ({ friend }) => {
+const Friends = ({ photo, name, about, location, birthday, facebook, friends }) => {
     return (
         <div class="information">
             <div class="container">
@@ -110,11 +110,11 @@ const Friends = ({ friend }) => {
                             <div class="propic"></div>
                             <br />
                             <div class="proinfo">
-                                <p>Name:sefsefs </p>
-                                <p>About: sefsefe</p>
-                                <p>Location: sefse</p>
-                                <p>Interests: sefse</p>
-                                <p>Facebook: sefsef</p>
+                                <p>Name: {name} </p>
+                                <p>About: {about}</p>
+                                <p>Location: {location}</p>
+                                <p>Birthday: {birthday}</p>
+                                <p>Facebook: {facebook}</p>
                             </div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@ const Friends = ({ friend }) => {
     );
 };
 
-const Chatroom = ({ chat }) => {
+const Chatroom = ({ photo, name, about, location, birthday, facebook, chat }) => {
     return (
         <div class="information">
             <div class="container">
@@ -157,11 +157,11 @@ const Chatroom = ({ chat }) => {
                             <div class="propic"></div>
                             <br />
                             <div class="proinfo">
-                                <p>Name:sefsefs </p>
-                                <p>About: sefsefe</p>
-                                <p>Location: sefse</p>
-                                <p>Interests: sefse</p>
-                                <p>Facebook: sefsef</p>
+                                <p>Name: {name} </p>
+                                <p>About: {about}</p>
+                                <p>Location: {location}</p>
+                                <p>Birthday: {birthday}</p>
+                                <p>Facebook: {facebook}</p>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@ const Chatroom = ({ chat }) => {
     );
 };
 
-const Settings = e => {
+const Settings = ({ photo, name, about, location, birthday, facebook, email, password, cpassword }) => {
     return (
         <div class="information">
             <div class="container">
@@ -204,11 +204,11 @@ const Settings = e => {
                             <div class="propic"></div>
                             <br />
                             <div class="proinfo">
-                                <p>Name:sefsefs </p>
-                                <p>About: sefsefe</p>
-                                <p>Location: sefse</p>
-                                <p>Interests: sefse</p>
-                                <p>Facebook: sefsef</p>
+                                <p>Name: {name} </p>
+                                <p>About: {about}</p>
+                                <p>Location: {location}</p>
+                                <p>Birthday: {birthday}</p>
+                                <p>Facebook: {facebook}</p>
                             </div>
                         </div>
                     </div>
@@ -247,9 +247,23 @@ class Users extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: "",
-            name: "",
-            profile: ""
+            //main
+            photo: "",
+            name: "Stephanie Hou",
+            about: "Developer From New York",
+            location: "New York, New York",
+            birthday: "Nov 11th",
+            facebook: "Link",
+            //account
+            interests: [],
+            //matches
+            matches: [],
+            //friends
+            friends: [],
+            //settings
+            username: "",
+            password: "",
+            cpassword: "",
         };
     }
 
@@ -267,23 +281,24 @@ class Users extends React.Component {
             });
         });
 
+        // Calendar
         $(document).ready(function () {
             function c(passed_month, passed_year, calNum) {
-                var calendar = calNum == 0 ? calendars.cal1 : calendars.cal2;
+                var calendar = calNum === 0 ? calendars.cal1 : calendars.cal2;
                 makeWeek(calendar.weekline);
                 calendar.datesBody.empty();
                 var calMonthArray = makeMonthArray(passed_month, passed_year);
                 var r = 0;
                 var u = false;
                 while (!u) {
-                    if (daysArray[r] == calMonthArray[0].weekday) {
+                    if (daysArray[r] === calMonthArray[0].weekday) {
                         u = true
                     } else {
                         calendar.datesBody.append('<div class="blank"></div>');
                         r++;
                     }
                 }
-                for (var cell = 0; cell < 42 - r; cell++) { // 42 date-cells in calendar
+                for (var cell = 0; cell < 42 - r; cell++) {
                     if (cell >= calMonthArray.length) {
                         calendar.datesBody.append('<div class="blank"></div>');
                     } else {
@@ -291,7 +306,7 @@ class Users extends React.Component {
                         var iter_date = new Date(passed_year, passed_month, shownDate);
                         if (
                             (
-                                (shownDate != today.getDate() && passed_month == today.getMonth()) || passed_month != today.getMonth()) && iter_date < today) {
+                                (shownDate !== today.getDate() && passed_month === today.getMonth()) || passed_month !== today.getMonth()) && iter_date < today) {
                             var m = '<div class="past-date">';
                         } else {
                             var m = checkToday(iter_date) ? '<div class="today">' : "<div>";
@@ -305,8 +320,6 @@ class Users extends React.Component {
                 calendar.weekline.find("div").css("color", color);
                 calendar.datesBody.find(".today").css("color", "#6AC5F2");
 
-                // find elements (dates) to be clicked on each time
-                // the calendar is generated
                 var clicked = false;
                 selectDates(selected);
 
@@ -328,7 +341,7 @@ class Users extends React.Component {
                             thirdClicked.date);
                         if (secondClickDateObj > thirdClickDateObj && thirdClickDateObj > firstClickDateObj) {
                             secondClicked = thirdClicked;
-                            // then choose dates again from the start :)
+
                             bothCals.find(".calendar_content").find("div").each(function () {
                                 $(this).removeClass("selected");
                             });
@@ -336,7 +349,7 @@ class Users extends React.Component {
                             selected[firstClicked.year] = {};
                             selected[firstClicked.year][firstClicked.month] = [firstClicked.date];
                             selected = addChosenDates(firstClicked, secondClicked, selected);
-                        } else { // reset clicks
+                        } else {
                             selected = {};
                             firstClicked = [];
                             secondClicked = [];
@@ -356,7 +369,6 @@ class Users extends React.Component {
                         secondClick = true;
                         secondClicked = getClickedInfo(clicked, calendar);
 
-                        // what if second clicked date is before the first clicked?
                         var firstClickDateObj = new Date(firstClicked.year,
                             firstClicked.month,
                             firstClicked.date);
@@ -373,7 +385,7 @@ class Users extends React.Component {
                             selected[firstClicked.year] = {};
                             selected[firstClicked.year][firstClicked.month] = [firstClicked.date];
 
-                        } else if (firstClickDateObj.getTime() == secondClickDateObj.getTime()) {
+                        } else if (firstClickDateObj.getTime() === secondClickDateObj.getTime()) {
                             selected = {};
                             firstClicked = [];
                             secondClicked = [];
@@ -381,9 +393,6 @@ class Users extends React.Component {
                             secondClick = false;
                             $(this).removeClass("selected");
                         }
-
-
-                        // add between dates to [selected]
                         selected = addChosenDates(firstClicked, secondClicked, selected);
                     }
                     selectDates(selected);
@@ -401,7 +410,7 @@ class Users extends React.Component {
                             var daysToCompare = selected[passed_year][passed_month];
                             for (var d in daysToCompare) {
                                 dateElements.each(function (index) {
-                                    if (parseInt($(this).text()) == daysToCompare[d]) {
+                                    if (parseInt($(this).text()) === daysToCompare[d]) {
                                         $(this).addClass('selected');
                                     }
                                 });
@@ -409,18 +418,16 @@ class Users extends React.Component {
 
                         }
                     }
-
                     highlightDates(year, month, dateElements1);
                     highlightDates(nextYear, nextMonth, dateElements2);
                 }
             }
 
-            function makeMonthArray(passed_month, passed_year) { // creates Array specifying dates and weekdays
+            function makeMonthArray(passed_month, passed_year) {
                 var e = [];
                 for (var r = 1; r < getDaysInMonth(passed_year, passed_month) + 1; r++) {
                     e.push({
                         day: r,
-                        // Later refactor -- weekday needed only for first week
                         weekday: daysArray[getWeekdayNum(passed_year, passed_month, r)]
                     });
                 }
@@ -445,19 +452,19 @@ class Users extends React.Component {
             function checkToday(e) {
                 var todayDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
                 var checkingDate = e.getFullYear() + '/' + (e.getMonth() + 1) + '/' + e.getDate();
-                return todayDate == checkingDate;
+                return todayDate === checkingDate;
 
             }
 
             function getAdjacentMonth(curr_month, curr_year, direction) {
                 var theNextMonth;
                 var theNextYear;
-                if (direction == "next") {
+                if (direction === "next") {
                     theNextMonth = (curr_month + 1) % 12;
-                    theNextYear = (curr_month == 11) ? curr_year + 1 : curr_year;
+                    theNextYear = (curr_month === 11) ? curr_year + 1 : curr_year;
                 } else {
-                    theNextMonth = (curr_month == 0) ? 11 : curr_month - 1;
-                    theNextYear = (curr_month == 0) ? curr_year - 1 : curr_year;
+                    theNextMonth = (curr_month === 0) ? 11 : curr_month - 1;
+                    theNextYear = (curr_month === 0) ? curr_year - 1 : curr_year;
                 }
                 return [theNextMonth, theNextYear];
             }
@@ -471,15 +478,12 @@ class Users extends React.Component {
                 nextYear = nextDates[1];
             }
 
-            var e = 480;
-
             var today;
             var year,
                 month,
                 nextMonth,
                 nextYear;
 
-            var r = [];
             var i = [
                 "JANUARY",
                 "FEBRUARY",
@@ -556,7 +560,7 @@ class Users extends React.Component {
                     c(month, year, 0);
                     c(nextMonth, nextYear, 1);
                 };
-                if (clicked.attr("class").indexOf("left") != -1) {
+                if (clicked.attr("class").indexOf("left") !== -1) {
                     generateCalendars("previous");
                 } else {
                     generateCalendars("next");
@@ -564,16 +568,14 @@ class Users extends React.Component {
                 clickedElement = bothCals.find(".calendar_content").find("div");
             });
 
-
-            //  Click picking stuff
             function getClickedInfo(element, calendar) {
                 var clickedInfo = {};
                 var clickedCalendar,
                     clickedMonth,
                     clickedYear;
                 clickedCalendar = calendar.name;
-                clickedMonth = clickedCalendar == "first" ? month : nextMonth;
-                clickedYear = clickedCalendar == "first" ? year : nextYear;
+                clickedMonth = clickedCalendar === "first" ? month : nextMonth;
+                clickedYear = clickedCalendar === "first" ? year : nextYear;
                 clickedInfo = {
                     "calNum": clickedCalendar,
                     "date": parseInt(element.text()),
@@ -583,8 +585,6 @@ class Users extends React.Component {
                 return clickedInfo;
             }
 
-
-            // Finding between dates MADNESS. Needs refactoring and smartening up :)
             function addChosenDates(firstClicked, secondClicked, selected) {
                 if (secondClicked.date > firstClicked.date || secondClicked.month > firstClicked.month || secondClicked.year > firstClicked.year) {
 
@@ -593,7 +593,6 @@ class Users extends React.Component {
                     var added_date = secondClicked.date;
 
                     if (added_year > firstClicked.year) {
-                        // first add all dates from all months of Second-Clicked-Year
                         selected[added_year] = {};
                         selected[added_year][added_month] = [];
                         for (var i = 1;
@@ -614,10 +613,9 @@ class Users extends React.Component {
                         }
 
                         added_year = added_year - 1;
-                        added_month = 11; // reset month to Dec because we decreased year
-                        added_date = getDaysInMonth(added_year, added_month); // reset date as well
+                        added_month = 11;
+                        added_date = getDaysInMonth(added_year, added_month);
 
-                        // Now add all dates from all months of inbetween years
                         while (added_year > firstClicked.year) {
                             selected[added_year] = {};
                             for (var i = 0; i < 12; i++) {
@@ -631,7 +629,7 @@ class Users extends React.Component {
                     }
 
                     if (added_month > firstClicked.month) {
-                        if (firstClicked.year == secondClicked.year) {
+                        if (firstClicked.year === secondClicked.year) {
                             selected[added_year][added_month] = [];
                             for (var i = 1;
                                 i <= secondClicked.date;
@@ -669,6 +667,7 @@ class Users extends React.Component {
     };
 
     renderUserProfile = () => {
+        const { photo, name, about, location, birthday, facebook, interests, matches, friends, email, password, cpassword } = this.state;
         return (
             <div id="users">
                 <div class="wrapper">
@@ -701,27 +700,27 @@ class Users extends React.Component {
                             <Route
                                 exact
                                 path="/userprofile/account"
-                                component={() => <Account />}
+                                component={() => <Account photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} interests={interests} />}
                             />
                             <Route
                                 exact
                                 path="/userprofile/matches"
-                                component={() => <Matches />}
+                                component={() => <Matches photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} matches={matches} />}
                             />
                             <Route
                                 exact
                                 path="/userprofile/friends"
-                                component={() => <Friends friend={this.state.name} />}
+                                component={() => <Friends photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} friends={friends} />}
                             />
                             <Route
                                 exact
                                 path="/userprofile/chatroom"
-                                component={() => <Chatroom />}
+                                component={() => <Chatroom photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} />}
                             />
                             <Route
                                 exact
                                 path="/userprofile/settings"
-                                component={() => <Settings />}
+                                component={() => <Settings photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} email={email} password={password} cpassword={cpassword} />}
                             />
                         </div>
 

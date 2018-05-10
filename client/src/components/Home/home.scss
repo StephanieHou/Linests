@@ -51,9 +51,8 @@ $size) {
     width: 100px;
     text-decoration: none;
     font-size: 16px;
-    color: white;
-    border-radius: 0 5px 5px 0;
     font-family: 'Courgette', cursive;
+    border-radius: 0 5px 5px 0;
     &:hover {
         left: 0;
     }
@@ -61,17 +60,14 @@ $size) {
 
 #sideOne {
     top: 20px;
-    background-color: #ff51a2;
 }
 
 #sideTwo {
     top: 80px;
-    background-color: #e4c1f9;
 }
 
 #sideThree {
     top: 140px;
-    background-color: #55b1df;
 }
 
 /* ---------------------------------------------------
@@ -466,16 +462,6 @@ svg:hover .spin {
 @keyframes fillInPurple {
     to {
         fill: #e4c1f9;
-    }
-}
-
-@keyframes FadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-        fill: white;
     }
 }
 
