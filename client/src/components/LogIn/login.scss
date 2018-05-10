@@ -1,3 +1,11 @@
+@mixin grounds($z) {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: $z;
+}
+
 .login {
     background-color: #6ac5f2;
     height: 100vh;
@@ -10,30 +18,18 @@
     background-repeat: no-repeat;
     background-size: cover;
     #background {
-        position: absolute;
-        top: 0;
-        height: 100vh;
-        width: 100vw;
-        z-index: 1;
+        @include grounds(1);
         background: url('../Images/Goals.png');
         background-size: 35% 35%;
     }
     #middleground {
-        position: absolute;
-        top: 0;
-        height: 100vh;
-        width: 100vw;
-        z-index: 2;
+        @include grounds(2);
         background: url('../Images/Match.png');
         background-size: 20% 20%;
         opacity: .5;
     }
     #foreground {
-        position: absolute;
-        top: 0;
-        height: 100vh;
-        width: 100vw;
-        z-index: 3;
+        @include grounds(3);
         background: url('../Images/Interests.png');
         background-size: 10% 10%;
         opacity: .25;
@@ -42,30 +38,30 @@
         width: 30vw;
         height: 40vh;
         z-index: 4;
-        background-color: rgba(255, 255, 255, 0.781);
+        background-color: rgba(255, 255, 255, 0.87);
         border-radius: 10px;
         text-align: center;
-        a{
+        a {
             color: black;
         }
         h1 {
             font-family: 'Courgette', cursive;
         }
-        #formstyle{
-           input{
-              border-radius: 5px;
-              height: 6vh;
-              width: 20vw;
-           }
+        #formstyle {
+            input {
+                border-radius: 5px;
+                height: 6vh;
+                width: 20vw;
+            }
         }
-        input[type="submit"]{
+        input[type="submit"] {
             background-color: black;
-            color:white;
+            color: white;
             border-radius: 5px;
             padding: 7px;
             width: 20vw;
             &:hover {
-                background-color:#6ac5f2;
+                background-color: #6ac5f2;
             }
         }
     }

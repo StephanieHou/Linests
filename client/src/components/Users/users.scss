@@ -125,22 +125,21 @@ body {
         background: #FFFCF9;
         transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
         transition-delay: 0.2s;
+        &:first-of-type {
+            transform: rotate(45deg) translate(2px, 2px);
+        }
+        &:nth-of-type(2) {
+            opacity: 0;
+        }
+        &:last-of-type {
+            transform: rotate(-45deg) translate(1px, -1px);
+        }
     }
-    span:first-of-type {
-        transform: rotate(45deg) translate(2px, 2px);
+    &.active span {
+        transform: none;
+        opacity: 1;
+        margin: 5px auto;
     }
-    span:nth-of-type(2) {
-        opacity: 0;
-    }
-    span:last-of-type {
-        transform: rotate(-45deg) translate(1px, -1px);
-    }
-}
-
-#sidebarCollapse.active span {
-    transform: none;
-    opacity: 1;
-    margin: 5px auto;
 }
 
 /* ---------------------------------------------------
@@ -247,22 +246,22 @@ body {
             border: 1px solid #dcdcdc;
             cursor: default;
         }
-    }
-    .calendar_content div.blank:hover {
-        cursor: default;
-        border: 1px solid transparent;
-    }
-    .calendar_content div.past-date {
-        color: #d5d5d5;
-    }
-    .calendar_content div.today {
-        font-weight: bold;
-        font-size: 14px;
-        color: #6AC5F2;
-        border: 1px solid #dcdcdc;
-    }
-    .calendar_content div.selected {
-        background-color: #f0f0f0;
+        &.blank:hover {
+            cursor: default;
+            border: 1px solid transparent;
+        }
+        &.past-date {
+            color: #d5d5d5;
+        }
+        &.today {
+            font-weight: bold;
+            font-size: 14px;
+            color: #6AC5F2;
+            border: 1px solid #dcdcdc;
+        }
+        &.selected {
+            background-color: #f0f0f0;
+        }
     }
     .calendar_header {
         width: 100%;
@@ -302,10 +301,10 @@ body {
     #sidebar {
         margin-left: -250px;
         transform: rotateY(90deg);
-    }
-    #sidebar.active {
-        margin-left: 0;
-        transform: none;
+        &.active {
+            margin-left: 0;
+            transform: none;
+        }
     }
     #sidebarCollapse span:first-of-type,
     #sidebarCollapse span:nth-of-type(2),
@@ -317,15 +316,15 @@ body {
     #sidebarCollapse.active {
         span {
             margin: 0 auto;
-        }
-        span:first-of-type {
-            transform: rotate(45deg) translate(2px, 2px);
-        }
-        span:nth-of-type(2) {
-            opacity: 0;
-        }
-        span:last-of-type {
-            transform: rotate(-45deg) translate(1px, -1px);
+            &:first-of-type {
+                transform: rotate(45deg) translate(2px, 2px);
+            }
+            &:nth-of-type(2) {
+                opacity: 0;
+            }
+            &:last-of-type {
+                transform: rotate(-45deg) translate(1px, -1px);
+            }
         }
     }
 }

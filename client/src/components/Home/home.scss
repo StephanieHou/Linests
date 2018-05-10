@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Berkshire+Swash|Courgette|Lobster+Two');
 /* ---------------------------------------------------
-    Colors
+    General
 ----------------------------------------------------- */
 
 .pink {
@@ -16,6 +16,26 @@
 .blue {
     background-color: #55b1df;
     color: white;
+}
+
+@mixin parallaxs($height,
+$size) {
+    height: $height;
+    min-height: $height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: $size $size;
+}
+
+@mixin parword () {
+    font-family: 'Courgette', cursive;
+    color: white;
+    font-size: 60px;
+    text-shadow: 2px 2px 0 #000, 0px 0px 0 #000, 0px 0px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 /* ---------------------------------------------------
@@ -60,18 +80,11 @@
 
 .parallax {
     background: linear-gradient(270deg, #ff51a2, #e4c1f9, #6ac5f2);
-    background-size: 600% 600%;
+    @include parallaxs(100vh,
+    600%);
     -webkit-animation: Gradient 19s ease infinite;
     -moz-animation: Gradient 19s ease infinite;
     animation: Gradient 19s ease infinite;
-    height: 100vh;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
     font-family: 'Courgette', cursive;
     #homeheader {
         font-weight: 400;
@@ -111,50 +124,43 @@
             border: 1px solid #fff;
             border-radius: 100%;
             box-sizing: border-box;
-        }
-        span::after {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            content: '';
-            width: 16px;
-            height: 16px;
-            margin: -12px 0 0 -8px;
-            border-left: 1px solid #fff;
-            border-bottom: 1px solid #fff;
-            -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-            box-sizing: border-box;
-        }
-        span::before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            content: '';
-            width: 44px;
-            height: 44px;
-            box-shadow: 0 0 0 0 rgba(255, 255, 255, .1);
-            border-radius: 100%;
-            opacity: 0;
-            -webkit-animation: headerscroll 3s infinite;
-            animation: headerscroll 3s infinite;
-            box-sizing: border-box;
+            &::after {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                content: '';
+                width: 16px;
+                height: 16px;
+                margin: -12px 0 0 -8px;
+                border-left: 1px solid #fff;
+                border-bottom: 1px solid #fff;
+                -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                box-sizing: border-box;
+            }
+            &::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                content: '';
+                width: 44px;
+                height: 44px;
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, .1);
+                border-radius: 100%;
+                opacity: 0;
+                -webkit-animation: headerscroll 3s infinite;
+                animation: headerscroll 3s infinite;
+                box-sizing: border-box;
+            }
         }
     }
 }
 
 .parallax1 {
     background-image: url('../Images/Hiking.png');
-    height: 100vh;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    @include parallaxs(100vh,
+    100%);
     #about {
         width: 40vw;
         height: 50vh;
@@ -174,15 +180,8 @@
 
 .parallax2 {
     background-color: white;
-    height: 245vh;
-    min-height: 245vh;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    @include parallaxs(250vh,
+    100%);
     h1 {
         font-family: 'Courgette', cursive;
         margin: 40px;
@@ -194,6 +193,7 @@
         background-size: auto 150%;
         background-position: 0 100%;
         color: white;
+        margin-top: -45px;
     }
     .container {
         text-align: center;
@@ -258,39 +258,19 @@
 
 .parallax3 {
     background-image: url('../Images/Volleyball.jpg');
-    height: 60vh;
-    min-height: 60vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    @include parallaxs(60vh,
+    100%);
     a {
-        font-family: 'Courgette', cursive;
-        color: white;
-        font-size: 60px;
-        text-shadow: 2px 2px 0 #000, 0px 0px 0 #000, 0px 0px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        @include parword();
     }
 }
 
 .parallax4 {
     background-image: url('../Images/Sailing.jpg');
-    height: 60vh;
-    min-height: 60vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    @include parallaxs(60vh,
+    100%);
     a {
-        font-family: 'Courgette', cursive;
-        color: white;
-        font-size: 60px;
-        text-shadow: 2px 2px 0 #000, 0px 0px 0 #000, 0px 0px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        @include parword();
     }
 }
 
@@ -299,16 +279,9 @@
 ----------------------------------------------------- */
 
 .footer {
+    @include parallaxs(20vh,
+    100%);
     background-color: white;
-    height: 20vh;
-    min-height: 20vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 /* ---------------------------------------------------
@@ -417,6 +390,12 @@ svg:hover .spin {
     animation: spin 2s infinite;
 }
 
+@mixin filler($animation) {
+    animation: $animation 0.5s linear alternate;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
 .fadeIn {
     animation: FadeIn 5s linear alternate;
     animation-fill-mode: forwards;
@@ -425,65 +404,49 @@ svg:hover .spin {
     fill: transparent;
     &:nth-child(2) {
         &:hover {
-            animation: fillInRed 0.5s linear alternate;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
+            @include filler(fillInRed);
         }
     }
     &:nth-child(3) {
-        animation-delay: 3s;
+        animation-delay: 1.8s;
         &:hover {
-            animation: fillInRed 0.5s linear alternate;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
+            @include filler(fillInRed);
         }
     }
     &:nth-child(4) {
-        animation-delay: 2s;
+        animation-delay: 1.2s;
         &:hover {
-            animation: fillInBlue 0.5s linear alternate;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
+            @include filler(fillInBlue);
         }
     }
     &:nth-child(5) {
-        animation-delay: 3.5s;
+        animation-delay: 2.1s;
         &:hover {
-            animation: fillInBlue 0.5s linear alternate;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
+            @include filler(fillInBlue);
         }
     }
     &:nth-child(6) {
-        animation-delay: 1s;
+        animation-delay: 0.6s;
         &:hover {
-            animation: fillInPurple 0.5s linear alternate;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
+            @include filler(fillInPurple);
         }
     }
     &:nth-child(7) {
-        animation-delay: 1.5s;
+        animation-delay: 0.9s;
         &:hover {
-            animation: fillInRed 0.5s linear alternate;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
+            @include filler(fillInRed);
         }
     }
     &:nth-child(8) {
-        animation-delay: 0.5s;
+        animation-delay: 0.3s;
         &:hover {
-            animation: fillInBlue 0.5s linear alternate;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
+            @include filler(fillInBlue);
         }
     }
     &:nth-child(9) {
-        animation-delay: 2.5s;
+        animation-delay: 1.5s;
         &:hover {
-            animation: fillInPurple 0.5s linear alternate;
-            animation-fill-mode: forwards;
-            animation-iteration-count: 1;
+            @include filler(fillInPurple);
         }
     }
 }

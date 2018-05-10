@@ -1,3 +1,11 @@
+@mixin grounds($z) {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: $z;
+}
+
 .signup {
     background-color: #e4c1f9;
     height: 100vh;
@@ -10,30 +18,18 @@
     background-repeat: no-repeat;
     background-size: cover;
     #background {
-        position: absolute;
-        top: 0;
-        height: 100vh;
-        width: 100vw;
-        z-index: 1;
+        @include grounds(1);
         background: url('../Images/Hobbies.png');
         background-size: 30% 29%;
     }
     #middleground {
-        position: absolute;
-        top: 0;
-        height: 100vh;
-        width: 100vw;
-        z-index: 2;
+        @include grounds(2);
         background: url('../Images/Links.png');
         background-size: 20% 20%;
         opacity: .5;
     }
     #foreground {
-        position: absolute;
-        top: 0;
-        height: 100vh;
-        width: 100vw;
-        z-index: 3;
+        @include grounds(3);
         background: url('../Images/Friends.png');
         background-size: 10% 10%;
         opacity: .25;
@@ -46,7 +42,7 @@
         border-radius: 10px;
         text-align: center;
         z-index: 4;
-        background-color: rgba(255, 255, 255, 0.781);
+        background-color: rgba(255, 255, 255, 0.87);
         border-radius: 10px;
         text-align: center;
         a {
