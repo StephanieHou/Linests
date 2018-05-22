@@ -35,7 +35,7 @@
         opacity: .25;
     }
     #signform {
-        width: 30vw;
+        width: 35vw;
         height: 65vh;
         z-index: 4;
         background-color: white;
@@ -57,7 +57,19 @@
             input {
                 border-radius: 5px;
                 height: 6vh;
-                width: 20vw;
+                width: 25vw;
+            }
+            textarea{
+                border-radius: 5px;
+                height: 12vh;
+                width: 25vw;
+                border: lightgrey 1px solid;
+            }
+            select{
+                border-radius: 5px;
+                height: 6vh;
+                width: 25vw;
+                background-color: white;
             }
         }
         input[type="submit"] {
@@ -65,10 +77,15 @@
             color: white;
             border-radius: 5px;
             padding: 7px;
-            width: 20vw;
+            width: 25vw;
             &:hover {
                 background-color: #e4c1f9;
                 color: black;
+            }
+        }
+        #birthday{
+            select{
+                width: 8.5vw;
             }
         }
     }

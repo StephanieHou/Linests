@@ -4,6 +4,8 @@ import * as ReactBootstrap from 'react-bootstrap';
 import $ from 'jquery';
 import Navigation from '../Navigation/navigation';
 import './signup.scss';
+import axios from "axios";
+import swal from 'sweetalert'
 
 class Signup extends React.Component {
     constructor(props) {
@@ -11,15 +13,21 @@ class Signup extends React.Component {
         this.state = {
             firstname: "",
             lastname: "",
+            gender: "",
+            education: "",
             about: "",
             username: "",
             password: "",
             cpassword: "",
-            birthday: "",
+            months: "",
+            dates: "",
+            years: "",
             address: "",
             city: "",
             state: "",
-            zipcode: ""
+            zipcode: "",
+            userData: "",
+            message: ""
         }
     };
 
@@ -51,6 +59,12 @@ class Signup extends React.Component {
         });
     };
 
+    handleEducation = e => {
+        this.setState({
+            education: e.target.value
+        });
+    };
+
     handleEmail = e => {
         this.setState({
             username: e.target.value
@@ -66,12 +80,6 @@ class Signup extends React.Component {
     handleCPassword = e => {
         this.setState({
             cpassword: e.target.value
-        });
-    };
-
-    handleBirthday = e => {
-        this.setState({
-            birthday: e.target.value
         });
     };
 
@@ -99,15 +107,109 @@ class Signup extends React.Component {
         });
     };
 
+    handleGenderChange = e => {
+        this.setState({
+            gender: e.target.value
+        });
+    };
+    handleMonthChange = e => {
+        this.setState({
+            months: e.target.value
+        });
+    };
+    handleDateChange = e => {
+        this.setState({
+            dates: e.target.value
+        });
+    };
+    handleYearChange = e => {
+        this.setState({
+            years: e.target.value
+        });
+    };
+
     submitForm = e => {
         e.preventDefault();
+        const { username, password, cpassword, firstname, lastname, about, gender, education, months, dates, years, address, city, state, zipcode, message } = this.state;
+        if (password === cpassword) {
+            axios
+                .post("/auth/new", {
+                    username: username,
+                    first_name: firstname,
+                    last_name: lastname,
+                    password: password,
+                    about: about,
+                    gender: gender,
+                    education: education,
+                    birthmonth: months,
+                    birthdate: dates,
+                    birthyear: years,
+                    address_line: address,
+                    city: city,
+                    state: state,
+                    zip_code: zipcode
+                })
+                .then(res => {
+                    this.setState({
+                        userData: res.data,
+                        firstname: "",
+                        lastname: "",
+                        username: "",
+                        password: "",
+                        about: "",
+                        gender: "",
+                        education: "",
+                        months: "",
+                        dates: "",
+                        years: "",
+                        address: "",
+                        city: "",
+                        state: "",
+                        zipcode: "",
+                        message: ""
+                    });
+                    swal({
+                        title: "Congralutions!",
+                        icon: "success",
+                        text: "You have successfully registered. Please log in to your account!"
+                    });
+                })
+                .catch(err => {
+                    this.setState({
+                        firstname: "",
+                        lastname: "",
+                        username: "",
+                        password: "",
+                        about: "",
+                        gender: "",
+                        education: "",
+                        months: "",
+                        dates: "",
+                        years: "",
+                        address: "",
+                        city: "",
+                        state: "",
+                        zip_code: "",
+                        message: "Please Make Sure That You Filled All Information "
+                    });
+                });
+        }
+        else {
+            this.setState({
+                message: "Passwords Do Not Match"
+            })
+        }
     }
 
     render() {
-        const { firstname, lastname, about, username, password, cpassword, birthday, address, city, state, zipcode } = this.state;
+        const { firstname, lastname, about, education, username, password, cpassword, months, years, dates, address, city, state, zipcode, message } = this.state;
+        let gender = ["Select Gender", "Female", "Male"];
+        const monthslist = ["Birth Month", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+        const dateslist = ["Birth Day", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+        const yearslist = ["Birth Year", 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018];
         return (
             <div>
-                <Navigation />
+                <Navigation isLoggedIn={this.props.isLoggedIn} />
                 <div class="signup">
                     <div id="signform">
                         <div>
@@ -124,7 +226,17 @@ class Signup extends React.Component {
                                     </label>
                                     <br />
                                     <label>
-                                        <input type="text" name="about" placeholder="Tell Us About Yourself" value={about} onChange={this.handleAbout} />
+                                        <select onChange={this.handleGenderChange}>
+                                            {gender.map(gender => <option value={gender}>{gender}</option>)}
+                                        </select>
+                                    </label>
+                                    <br />
+                                    <label>
+                                        <textarea type="text" name="about" placeholder="Tell Us About Yourself" value={about} onChange={this.handleAbout} />
+                                    </label>
+                                    <br />
+                                    <label>
+                                        <input type="text" name="education" placeholder="Education (school)" value={education} onChange={this.handleEducation} />
                                     </label>
                                     <br />
                                     <label>
@@ -139,8 +251,16 @@ class Signup extends React.Component {
                                         <input type="password" name="cpassword" placeholder="Confirm Password" pattern=".{8,}" title="Eight or more characters" value={cpassword} onChange={this.handleCPassword} />
                                     </label>
                                     <br />
-                                    <label>
-                                        <input type="text" name="birthday" placeholder="Birthday" value={birthday} onChange={this.handleBirthday} />
+                                    <label id="birthday">
+                                        <select onChange={this.handleMonthChange}>
+                                            {monthslist.map(month => <option value={month}>{month}</option>)}
+                                        </select>
+                                        <select onChange={this.handleDateChange}>
+                                            {dateslist.map(date => <option value={date}>{date}</option>)}
+                                        </select>
+                                        <select onChange={this.handleYearChange}>
+                                            {yearslist.map(year => <option value={year}>{year}</option>)}
+                                        </select>
                                     </label>
                                     <br />
                                     <label>
@@ -166,6 +286,7 @@ class Signup extends React.Component {
                             <Link to={`/login`}>
                                 <a>Already A User? Log In Here</a>
                             </Link>
+                            <p>{message}</p>
                         </div>
                     </div>
                     <div id="background">

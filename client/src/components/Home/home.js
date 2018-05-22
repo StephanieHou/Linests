@@ -5,6 +5,8 @@ import * as ReactBootstrap from 'react-bootstrap';
 import $ from 'jquery';
 
 import './home.scss';
+import Api from "../Api/Api";
+import swal from 'sweetalert'
 
 class Home extends React.Component {
     constructor(props) {
@@ -64,11 +66,21 @@ class Home extends React.Component {
         });
     }
 
+    handleLogout = () => {
+        Api.getLogout();
+        this.props.handleLogin("");
+        console.log("You have logout!");
+        swal({
+            title: "You Have Been Logged Out",
+            text: "We hope to see you again!"
+        });
+    };
+
 
     render() {
         return (
             <div>
-                <Navigation />
+                <Navigation isLoggedIn={this.props.isLoggedIn} handleLogout={this.handleLogout} />
                 <div id="side">
                     <div id="mySidenav" class="sidenav">
                         <a href="#first" id="sideOne" class="pink">About</a>

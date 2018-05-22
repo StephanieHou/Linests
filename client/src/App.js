@@ -8,18 +8,66 @@ import Signup from "./components/SignUp/signup";
 import Users from "./components/Users/users";
 import * as ReactBootstrap from 'react-bootstrap';
 import $ from 'jquery';
+import Api from './components/Api/Api'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-
+      isLoggedIn: "",
+      loggedData: "",
+      loggedUser_id: "",
+      loggedFname: "",
+      loggedLname: "",
+      loggedAbout: "",
+      loggedGender: "",
+      loggedEducation: "",
+      loggedBirthmonth: "",
+      loggedBirthdate: "",
+      loggedBirthyear: "",
+      loggedAddress: "",
+      loggedCity: "",
+      loggedState: "",
+      loggedZip: ""
     };
   }
   componentDidMount() {
     setTimeout(() => this.setState({ loading: false }), 2000);
   }
+
+  handleLogin = (login) => {
+    this.setState({
+      isLoggedIn: login
+    });
+  };
+
+  handleUserInfo = (username) => {
+    Api.getSingleUser(username)
+      .then(response => {
+        console.log("Response: ", response);
+        console.log("Response Data: ", response.data);
+        this.setState({
+          loggedData: response.data.data,
+          loggedUser_id: response.data.data[0].user_id,
+          loggedFname: response.data.data[0].first_name,
+          loggedLname: response.data.data[0].last_name,
+          loggedAbout: response.data.data[0].about,
+          loggedGender: response.data.data[0].gender,
+          loggedEducation: response.data.data[0].education,
+          loggedBirthmonth: response.data.data[0].birthmonth,
+          loggedBirthdate: response.data.data[0].birthdate,
+          loggedBirthyear: response.data.data[0].birthyear,
+          loggedAddress: response.data.data[0].address_line,
+          loggedCity: response.data.data[0].city,
+          loggedState: response.data.data[0].state,
+          loggedZip: response.data.data[0].zip_code
+        });
+      })
+      .catch(err => {
+        console.log("Error: ", err);
+      });
+  };
 
   render() {
     const { loading } = this.state;
@@ -51,11 +99,25 @@ class App extends React.Component {
 
     return (
       <div>
-        <Route exact path="/" render={props => (<Home />)} />
-        <Route exact path="/login" render={props => (<Login />)} />
-        <Route exact path="/signup" render={props => (<Signup />)} />
-        <Route exact path="/contact" render={props => (<Contact />)} />
-        <Route path="/userprofile" render={props => (<Users />)} />
+        <Route exact path="/" render={props => (<Home handleLogin={this.handleLogin} isLoggedIn={this.state.isLoggedIn ? true : false}{...props} />)} />
+        <Route exact path="/login" render={props => (<Login handleLogin={this.handleLogin} handleUserInfo={this.handleUserInfo} loggedFname={this.state.loggedFname} isLoggedIn={this.state.isLoggedIn ? true : false} {...props} />)} />
+        <Route exact path="/signup" render={props => (<Signup isLoggedIn={this.state.isLoggedIn ? true : false} {...props} />)} />
+        <Route exact path="/contact" render={props => (<Contact handleLogin={this.handleLogin} isLoggedIn={this.state.isLoggedIn ? true : false}{...props} />)} />
+        <Route path="/userprofile" render={props => (<Users handleLogin={this.handleLogin}
+          loggedUser_id={this.state.loggedUser_id}
+          loggedFname={this.state.loggedFname}
+          loggedLname={this.state.loggedLname}
+          loggedAbout={this.state.loggedAbout}
+          loggedGender={this.state.loggedGender}
+          loggedEducation={this.state.loggedEducation}
+          loggedBirthdate={this.state.loggedBirthdate}
+          loggedBirthmonth={this.state.loggedBirthmonth}
+          loggedBirthyear={this.state.loggedBirthyear}
+          loggedAddress={this.state.loggedAddress}
+          loggedCity={this.state.loggedCity}
+          loggedState={this.state.loggedState}
+          loggedZip={this.state.loggedZip}
+          isLoggedIn={this.state.isLoggedIn ? true : false}{...props} />)} />
       </div>
     );
   }

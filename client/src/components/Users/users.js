@@ -5,143 +5,60 @@ import $ from 'jquery';
 import Navigation from '../Navigation/navigation';
 
 import './users.scss';
+import Api from "../Api/Api";
+import swal from 'sweetalert'
 
-const Account = ({ photo, name, about, location, birthday, facebook, interests }) => {
+const Account = ({ city, state, education, gender, month, date, interests, onToggle }) => {
     return (
-        <div class="information">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-5 col-md-3">
-                        <div class="userinfo pull-right">
-                            <div class="propic"></div>
-                            <br />
-                            <div class="proinfo">
-                                <p>Name: {name} </p>
-                                <p>About: {about}</p>
-                                <p>Location: {location}</p>
-                                <p>Birthday: {birthday}</p>
-                                <p>Facebook: {facebook}</p>
-                            </div>
+        <div class="compinfo">
+            <div class="comphead">
+                <h3>Account Summary</h3>
+            </div>
+            <div class="info">
+                <h3>Information</h3>
+                <p> Location: {city}, {state}</p>
+                <p> Gender: {gender} </p>
+                <p> Birthday: {month} {date}</p>
+                <p> Education: {education} </p>
+                <h3>Interests</h3>
+                <p>Click All That Interest You For Matching</p>
+                <div id="interestdiv">
+                    {interests.map((interest, i) => (
+                        <div id="ck-button">
+                            <label key={i}>
+                                <input type="checkbox"
+                                    value={interest.text}
+                                    name={interest.text}
+                                    checked={interest.checked}
+                                    onChange={onToggle.bind(this, i)} hidden /><span>{interest.text}</span>
+                            </label>
                         </div>
-                    </div>
-                    <div class="col-xs-10 col-md-6 pull-left">
-                        <div class="compinfo">
-                            <div class="comphead">
-                                <h3>Account Summary</h3>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-md-3 pull-right">
-                        <div class="cal">
-                            <div class="calendar calendar-first" id="calendar_first">
-                                <div class="calendar_header">
-                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
-                                    <h2></h2>
-                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
-                                </div>
-                                <div class="calendar_weekdays"></div>
-                                <div class="calendar_content"></div>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </div>
     );
 };
 
-const Matches = ({ photo, name, about, location, birthday, facebook, matches }) => {
+const Matches = ({ matches }) => {
     return (
-        <div class="information">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-5 col-md-3">
-                        <div class="userinfo pull-right">
-                            <div class="propic"></div>
-                            <br />
-                            <div class="proinfo">
-                                <p>Name: {name} </p>
-                                <p>About: {about}</p>
-                                <p>Location: {location}</p>
-                                <p>Birthday: {birthday}</p>
-                                <p>Facebook: {facebook}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-10 col-md-6 pull-left">
-                        <div class="compinfo">
-                            <div class="comphead">
-                                <h3>Matches</h3>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-md-3 pull-right">
-                        <div class="cal">
-                            <div class="calendar calendar-first" id="calendar_first">
-                                <div class="calendar_header">
-                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
-                                    <h2></h2>
-                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
-                                </div>
-                                <div class="calendar_weekdays"></div>
-                                <div class="calendar_content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="compinfo">
+            <div class="comphead">
+                <h3>Matches</h3>
+            </div>
+            <div class="info">
             </div>
         </div>
     );
 };
 
-const Friends = ({ photo, name, about, location, birthday, facebook, friends }) => {
+const Friends = ({ friends }) => {
     return (
-        <div class="information">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-5 col-md-3">
-                        <div class="userinfo pull-right">
-                            <div class="propic"></div>
-                            <br />
-                            <div class="proinfo">
-                                <p>Name: {name} </p>
-                                <p>About: {about}</p>
-                                <p>Location: {location}</p>
-                                <p>Birthday: {birthday}</p>
-                                <p>Facebook: {facebook}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-10 col-md-6 pull-left">
-                        <div class="compinfo">
-                            <div class="comphead">
-                                <h3>Friends</h3>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-md-3 pull-right">
-                        <div class="cal">
-                            <div class="calendar calendar-first" id="calendar_first">
-                                <div class="calendar_header">
-                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
-                                    <h2></h2>
-                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
-                                </div>
-                                <div class="calendar_weekdays"></div>
-                                <div class="calendar_content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="compinfo">
+            <div class="comphead">
+                <h3>Friends</h3>
+            </div>
+            <div class="info">
             </div>
         </div>
     );
@@ -149,46 +66,11 @@ const Friends = ({ photo, name, about, location, birthday, facebook, friends }) 
 
 const Chatroom = ({ photo, name, about, location, birthday, facebook, chat }) => {
     return (
-        <div class="information">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-5 col-md-3">
-                        <div class="userinfo pull-right">
-                            <div class="propic"></div>
-                            <br />
-                            <div class="proinfo">
-                                <p>Name: {name} </p>
-                                <p>About: {about}</p>
-                                <p>Location: {location}</p>
-                                <p>Birthday: {birthday}</p>
-                                <p>Facebook: {facebook}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-10 col-md-6 pull-left">
-                        <div class="compinfo">
-                            <div class="comphead">
-                                <h3>Chatroom</h3>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-md-3 pull-right">
-                        <div class="cal">
-                            <div class="calendar calendar-first" id="calendar_first">
-                                <div class="calendar_header">
-                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
-                                    <h2></h2>
-                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
-                                </div>
-                                <div class="calendar_weekdays"></div>
-                                <div class="calendar_content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="compinfo">
+            <div class="comphead">
+                <h3>Chatroom</h3>
+            </div>
+            <div class="info">
             </div>
         </div>
     );
@@ -196,46 +78,17 @@ const Chatroom = ({ photo, name, about, location, birthday, facebook, chat }) =>
 
 const Settings = ({ photo, name, about, location, birthday, facebook, email, password, cpassword }) => {
     return (
-        <div class="information">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-5 col-md-3">
-                        <div class="userinfo pull-right">
-                            <div class="propic"></div>
-                            <br />
-                            <div class="proinfo">
-                                <p>Name: {name} </p>
-                                <p>About: {about}</p>
-                                <p>Location: {location}</p>
-                                <p>Birthday: {birthday}</p>
-                                <p>Facebook: {facebook}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-10 col-md-6 pull-left">
-                        <div class="compinfo">
-                            <div class="comphead">
-                                <h3>Settings</h3>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-3 col-md-3 pull-right">
-                        <div class="cal">
-                            <div class="calendar calendar-first" id="calendar_first">
-                                <div class="calendar_header">
-                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
-                                    <h2></h2>
-                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
-                                </div>
-                                <div class="calendar_weekdays"></div>
-                                <div class="calendar_content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="compinfo">
+            <div class="comphead">
+                <h3>Settings</h3>
+            </div>
+            <div class="info">
+                <h3> Fill In New Information If You Want to Change It</h3>
+                <form>
+                    <input type="text" placeholder={name}></input>
+                    <input type="text" placeholder={name}></input>
+                    <input type="text" placeholder={name}></input>
+                </form>
             </div>
         </div>
     );
@@ -249,13 +102,24 @@ class Users extends React.Component {
         this.state = {
             //main
             photo: "",
-            name: "Stephanie Hou",
-            about: "Developer From New York",
-            location: "New York, New York",
-            birthday: "Nov 11th",
-            facebook: "Link",
+            name: "",
+            about: "",
+            location: "",
+            birthday: "",
+            facebook: "",
             //account
-            interests: [],
+            interests: [
+                { text: 'Art', checked: false },
+                { text: 'Basketball', checked: false },
+                { text: 'Dance', checked: false },
+                { text: 'EDM', checked: false },
+                { text: 'Fashion', checked: false },
+                { text: 'Football', checked: false },
+                { text: 'Music', checked: false },
+                { text: 'Photography', checked: false },
+                { text: 'Volleyball', checked: false },
+            ],
+            selected: [],
             //matches
             matches: [],
             //friends
@@ -268,6 +132,8 @@ class Users extends React.Component {
     }
 
     componentWillMount() {
+        // setTimeout(() => this.setState({ loading: false }), 1500);
+
         $(document).ready(function () {
             $("#sidebarCollapse").on("click", function () {
                 $("#sidebar").toggleClass("active");
@@ -318,7 +184,7 @@ class Users extends React.Component {
                 var color = "#444444";
                 calendar.calHeader.find("h2").text(i[passed_month] + " " + passed_year);
                 calendar.weekline.find("div").css("color", color);
-                calendar.datesBody.find(".today").css("color", "#6AC5F2");
+                calendar.datesBody.find(".today").css("color", "#ff51a2");
 
                 var clicked = false;
                 selectDates(selected);
@@ -661,12 +527,31 @@ class Users extends React.Component {
         });
     }
 
+    onToggle = (index, e) => {
+        let newItems = this.state.interests.slice();
+        newItems[index].checked = !newItems[index].checked
+        let checkedItems = newItems.filter(item => item.checked);
+        this.setState({
+            interests: newItems,
+            selected: checkedItems
+        })
+    }
+
     handleLogout = () => {
-        // Api.getLogout();
-        // console.log("You have logout!");
+        Api.getLogout();
+        console.log("You have logout!");
+        this.props.handleLogin("");
+        this.props.history.push("/login");
+        swal({
+            title: "You Have Been Logged Out",
+            text: "We hope to see you again!"
+        });
     };
 
     renderUserProfile = () => {
+        console.log(this.props.loggedCity)
+        console.log(this.state.interests)
+        console.log(this.state.selected)
         const { photo, name, about, location, birthday, facebook, interests, matches, friends, email, password, cpassword } = this.state;
         return (
             <div id="users">
@@ -674,14 +559,13 @@ class Users extends React.Component {
                     <nav id="sidebar">
                         <div class="sidebar-header">
                             <h3><Link to={'/'}><a>Linests</a></Link></h3>
-                            <p>Welcome User</p>
                         </div>
                         <ul class="list-unstyled components">
                             <li><Link to={'/userprofile/account'}><a>Account</a></Link></li>
                             <li><Link to={'/userprofile/matches'}><a>Matches</a></Link></li>
                             <li><Link to={'/userprofile/friends'}><a>Friends</a></Link></li>
                             <li><Link to={'/userprofile/settings'}><a>Settings</a></Link></li>
-                            <li><Link to={'/logout'}><a>Log Out</a></Link></li>
+                            <li><Link to={'/login'}><a onClick={this.handleLogout}>Log Out</a></Link></li>
                         </ul>
                     </nav>
                     <div id="content">
@@ -697,31 +581,67 @@ class Users extends React.Component {
                             </div>
                         </nav>
                         <div class="profile">
-                            <Route
-                                exact
-                                path="/userprofile/account"
-                                component={() => <Account photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} interests={interests} />}
-                            />
-                            <Route
-                                exact
-                                path="/userprofile/matches"
-                                component={() => <Matches photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} matches={matches} />}
-                            />
-                            <Route
-                                exact
-                                path="/userprofile/friends"
-                                component={() => <Friends photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} friends={friends} />}
-                            />
-                            <Route
-                                exact
-                                path="/userprofile/chatroom"
-                                component={() => <Chatroom photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} />}
-                            />
-                            <Route
-                                exact
-                                path="/userprofile/settings"
-                                component={() => <Settings photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} email={email} password={password} cpassword={cpassword} />}
-                            />
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-5 col-md-3">
+                                        <div class="userinfo pull-right">
+                                            <div class="propic"></div>
+                                            <br />
+                                            <div class="proinfo">
+                                                <p id="name">{this.props.loggedFname} {this.props.loggedLname}</p>
+                                                <p id="about">{this.props.loggedAbout}</p>
+                                                <button id="link">Facebook</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-10 col-md-6 pull-left">
+                                        <div class="compinfo">
+                                            <Route
+                                                exact
+                                                path="/userprofile/account"
+                                                component={() => <Account photo={photo} city={this.props.loggedCity} state={this.props.loggedState} education={this.props.loggedEducation} gender={this.props.loggedGender} month={this.props.loggedBirthmonth} date={this.props.loggedBirthdate} interests={interests} onToggle={this.onToggle} />}
+                                            />
+                                            <Route
+                                                exact
+                                                path="/userprofile/matches"
+                                                component={() => <Matches matches={matches} />}
+                                            />
+                                            <Route
+                                                exact
+                                                path="/userprofile/friends"
+                                                component={() => <Friends friends={friends} />}
+                                            />
+                                            <Route
+                                                exact
+                                                path="/userprofile/chatroom"
+                                                component={() => <Chatroom />}
+                                            />
+                                            <Route
+                                                exact
+                                                path="/userprofile/settings"
+                                                component={() => <Settings photo={photo} name={name} about={about} location={location} birthday={birthday} facebook={facebook} email={email} password={password} cpassword={cpassword} />}
+                                            />
+
+                                            <div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-md-3 pull-right">
+                                        <div class="cal">
+                                            <div class="calendar calendar-first" id="calendar_first">
+                                                <div class="calendar_header">
+                                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
+                                                    <h2></h2>
+                                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
+                                                </div>
+                                                <div class="calendar_weekdays"></div>
+                                                <div class="calendar_content"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>

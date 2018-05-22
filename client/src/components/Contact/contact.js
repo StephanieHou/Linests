@@ -3,6 +3,8 @@ import { Route, Link, Switch } from 'react-router-dom';
 import Navigation from '../Navigation/navigation';
 
 import './contact.scss';
+import Api from "../Api/Api";
+import swal from 'sweetalert'
 
 class Contact extends React.Component {
     constructor(props) {
@@ -31,6 +33,16 @@ class Contact extends React.Component {
         });
     };
 
+    handleLogout = () => {
+        Api.getLogout();
+        this.props.handleLogin("");
+        console.log("You have logout!");
+        swal({
+            title: "You Have Been Logged Out",
+            text: "We hope to see you again!"
+        });
+    };
+
     submitForm = e => {
         e.preventDefault();
     }
@@ -39,7 +51,7 @@ class Contact extends React.Component {
         const { username, issue, comments } = this.state;
         return (
             <div>
-                <Navigation />
+                <Navigation isLoggedIn={this.props.isLoggedIn} handleLogout={this.handleLogout}/>
                 <div class="contact">
                     <div id="cform">
                         <div>
