@@ -1,9 +1,8 @@
 const db = require("./connection");
 
+//USERS
 
-// USERS
-
-// Get All Users
+//
 function getAllUsers(req, res, next) {
   db
     .any("SELECT * FROM users")
@@ -37,7 +36,61 @@ function getSingleUser(req, res, next) {
     });
 }
 
+function getAllInterestsInfo(req, res, next) {
+  db
+    .any("SELECT * FROM interests")
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved ALL interests"
+      });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function getAllFriendsInfo(req, res, next) {
+  db
+    .any("SELECT * FROM friends")
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved ALL friends"
+      });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function getFriendsByUser(req, res, next) {
+  const userid = parseInt(req.params.userid);
+  db
+    .any(
+      `SELECT users.user_id, users.username, users.first_name, users.last_name
+       FROM users JOIN friends ON users.user_id=friends.added_id 
+        WHERE friends.user_id=$1`,
+      userid
+    )
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved ALL Friends By User Information"
+      });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
 module.exports = {
   getAllUsers: getAllUsers,
-  getSingleUser: getSingleUser
+  getSingleUser: getSingleUser,
+  getAllInterestsInfo: getAllInterestsInfo,
+  getAllFriendsInfo: getAllFriendsInfo,
+  getFriendsByUser: getFriendsByUser
 };

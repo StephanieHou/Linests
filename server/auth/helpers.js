@@ -17,11 +17,21 @@ function createUser(req, res, next) {
         .replace(/z|t/gi, " ")
         .trim();
       return db.none(
-        "INSERT INTO users (username, first_name, last_name, password_digest, created_at) VALUES (${username}, ${first_name}, ${last_name}, ${password}, ${created_at})",
+        "INSERT INTO users (username, password_digest, first_name, last_name, about, gender, education, birthmonth, birthdate, birthyear, address_line, city, state, zip_code, created_at) VALUES (${username}, ${password}, ${first_name}, ${last_name}, ${about}, ${gender}, ${education},${birthmonth}, ${birthdate}, ${birthyear}, ${address_line}, ${city}, ${state}, ${zip_code}, ${created_at})",
         {
           username: req.body.username,
           first_name: req.body.first_name,
           last_name: req.body.last_name,
+          about: req.body.about,
+          gender: req.body.gender,
+          education: req.body.education,
+          birthmonth: req.body.birthmonth,
+          birthdate: req.body.birthdate,
+          birthyear: req.body.birthyear,
+          address_line: req.body.address_line,
+          city: req.body.city,
+          state: req.body.state,
+          zip_code: req.body.zip_code,
           password: hash,
           created_at: timeStamp
         }
@@ -32,7 +42,7 @@ function createUser(req, res, next) {
     })
     .catch(err => {
       console.log(err);
-      res.status(500).send("error");
+      res.status(500).send("error creating");
     });
 }
 
@@ -42,6 +52,7 @@ function loginRequired(req, res, next) {
 }
 
 function loginRedirect(req, res, next) {
+  console.log(req.user)
   if (req.user) return res.status(401).json({ status: "You are already logged in" });
   return next();
 }

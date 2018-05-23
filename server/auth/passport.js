@@ -4,7 +4,7 @@ const db = require("../db/connection");
 module.exports = () => {
   //store the email on the session
   passport.serializeUser((user, done) => {
-        console.log("serializeUser from passport", user);
+    console.log("serializeUser from passport", user);
     done(null, user.username);
   });
 

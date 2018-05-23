@@ -6,13 +6,14 @@ const passport = require("../auth/local");
 const db = require("../db/queries");
 
 /* GET users listing. */
-router.get("/", function (req, res, next) {
+router.get("/", function(req, res, next) {
   console.log(req.sessionID);
-  res.send("Users");
+  res.send("You Are Inside Users");
 });
 
 router.get("/all", db.getAllUsers);
 router.get("/:username", db.getSingleUser);
+
 
 router.get("/login", authHelpers.loginRequired, (req, res, next) => {
   handleResponse(res, 200, "success");
