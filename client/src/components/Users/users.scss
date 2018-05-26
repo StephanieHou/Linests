@@ -194,7 +194,7 @@ body {
         #link {
             border-radius: 5px;
             padding: 5px;
-            background-color:  #ff51a2;
+            background-color: #ff51a2;
             color: white;
             width: 230px;
         }
@@ -225,15 +225,73 @@ body {
         //    border: 1px solid black;
         height: 67vh;
         overflow-y: scroll;
-        h3{
+        h3 {
             font-size: 18px;
             margin-left: 20px;
             font-family: 'Courgette', cursive;
             border-bottom: #ff51a2 3px solid;
             width: 90%;
         }
-        p{
+        p {
             margin-left: 20px;
+        }
+        #intsubmit {
+            border-radius: 4px;
+            background-color: #ff51a2;
+            font-family: 'Courgette', cursive;
+            color: white;
+            margin: -20px -50px;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            margin-bottom: 10px;
+        }
+        #interestdiv {
+            margin-left: 10px;
+            margin-right: 10px; // border: 1px solid black;
+            height: 13rem;
+            overflow-y: scroll;
+            #ck-button {
+                margin: 4px;
+                background-color: #EFEFEF;
+                border-radius: 4px;
+                border: 1px solid #D0D0D0;
+                overflow: auto;
+                float: left;
+                &:hover {
+                    background: #6d7fcc;
+                }
+                label {
+                    float: left;
+                    width: 6.5em;
+                    font-family: 'Courgette', cursive;
+                    span {
+                        text-align: center;
+                        padding: 3px 0px;
+                        display: block;
+                    }
+                    input {
+                        position: absolute;
+                        top: -20px;
+                        &:checked+span {
+                            background-color: #ff51a2;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+        #settings {
+            text-align: center;
+            input {
+                border-radius: 5px;
+                height: 35px;
+                width: 250px;
+            }
+            input[type="submit"] {
+                background-color: #ff51a2;
+                color: #fff;
+            }
         }
     }
 }
@@ -358,43 +416,4 @@ body {
             }
         }
     }
-}
-
-#interestdiv{
-    margin-left: 10px;
-    margin-right: 10px;
-}
-#ck-button {
-    margin:4px;
-    background-color:#EFEFEF;
-    border-radius:4px;
-    border:1px solid #D0D0D0;
-    overflow:auto;
-    float:left;
-}
-
-#ck-button:hover {
-    background:#6d7fcc;
-}
-
-#ck-button label {
-    float:left;
-    width:6.5em;
-    font-family: 'Courgette', cursive;
-}
-
-#ck-button label span {
-    text-align:center;
-    padding:3px 0px;
-    display:block;
-}
-
-#ck-button label input {
-    position:absolute;
-    top:-20px;
-}
-
-#ck-button input:checked + span {
-    background-color:#ff51a2;
-    color:#fff;
 }

@@ -39,7 +39,8 @@ INSERT INTO interests (user_id, passion)
          (1, 'Football'),
          (2, 'Football'),
          (2, 'EDM'),
-         (2, 'Art');
+         (2, 'Art'),
+         (4, 'Volleyball');
 
 
 CREATE TABLE friends (

@@ -29,11 +29,17 @@ class App extends React.Component {
       loggedAddress: "",
       loggedCity: "",
       loggedState: "",
-      loggedZip: ""
+      loggedZip: "",
+
+      friendslist: [],
+      interestlist: []
     };
   }
+
+
   componentDidMount() {
     setTimeout(() => this.setState({ loading: false }), 2000);
+    this.handleInterests();
   }
 
   handleLogin = (login) => {
@@ -62,6 +68,38 @@ class App extends React.Component {
           loggedCity: response.data.data[0].city,
           loggedState: response.data.data[0].state,
           loggedZip: response.data.data[0].zip_code
+        });
+        return response.data.data[0].user_id
+      })
+      .then((id) => {
+        this.handleFriendsByUser(id)
+      })
+      .catch(err => {
+        console.log("Error: ", err);
+      });
+  };
+
+  handleFriendsByUser = (id) => {
+    Api.getFriendsByUser(id)
+      .then(response => {
+        console.log("Response: ", response);
+        console.log("Response Data: ", response.data);
+        this.setState({
+          friendslist: response.data.data,
+        });
+      })
+      .catch(err => {
+        console.log("Error: ", err);
+      });
+  };
+
+  handleInterests = () => {
+    Api.getInterests()
+      .then(response => {
+        console.log("Response: ", response);
+        console.log("Response Data: ", response.data);
+        this.setState({
+          interestlist: response.data.data,
         });
       })
       .catch(err => {
@@ -100,7 +138,7 @@ class App extends React.Component {
     return (
       <div>
         <Route exact path="/" render={props => (<Home handleLogin={this.handleLogin} isLoggedIn={this.state.isLoggedIn ? true : false}{...props} />)} />
-        <Route exact path="/login" render={props => (<Login handleLogin={this.handleLogin} handleUserInfo={this.handleUserInfo} loggedFname={this.state.loggedFname} isLoggedIn={this.state.isLoggedIn ? true : false} {...props} />)} />
+        <Route exact path="/login" render={props => (<Login handleLogin={this.handleLogin} handleUserInfo={this.handleUserInfo} handleFriendsByUser={this.handleFriendsByUser} loggedFname={this.state.loggedFname} isLoggedIn={this.state.isLoggedIn ? true : false} {...props} />)} />
         <Route exact path="/signup" render={props => (<Signup isLoggedIn={this.state.isLoggedIn ? true : false} {...props} />)} />
         <Route exact path="/contact" render={props => (<Contact handleLogin={this.handleLogin} isLoggedIn={this.state.isLoggedIn ? true : false}{...props} />)} />
         <Route path="/userprofile" render={props => (<Users handleLogin={this.handleLogin}
@@ -117,7 +155,11 @@ class App extends React.Component {
           loggedCity={this.state.loggedCity}
           loggedState={this.state.loggedState}
           loggedZip={this.state.loggedZip}
-          isLoggedIn={this.state.isLoggedIn ? true : false}{...props} />)} />
+          isLoggedIn={this.state.isLoggedIn ? true : false}
+          friendslist={this.state.friendslist}
+          handleFriendsByUser={this.handleFriendsByUser}
+          interestlist={this.state.interestlist}
+          {...props} />)} />
       </div>
     );
   }

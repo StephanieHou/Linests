@@ -1,0 +1,47 @@
+.matchdiv{
+    background-color: #ff51a2;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin: 10px;
+    padding: 5px;
+    .container{
+        margin: 10px;
+    }
+    #fimg{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 10rem;
+    }
+    img{
+        
+        width: 9rem;
+        height: 9rem;
+        border: 2px solid white;
+        border-radius: 5px;
+    }
+    h4{
+     font-family: 'Courgette', cursive;
+    }
+    a{
+      background-color: white;
+      color: #ff51a2;
+      padding: 5px;
+      height: 3rem;
+      border-radius: 5px;
+      width: 13rem;
+    }
+    #chatlink{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 10rem;
+    }
+    .row{
+     div{
+         // border: 1px black solid;
+     }
+ }
+ 
+ }
