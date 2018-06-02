@@ -1,47 +1,47 @@
-.matchdiv{
+.matchdiv {
     background-color: #ff51a2;
     border: none;
     border-radius: 5px;
     color: white;
     margin: 10px;
     padding: 5px;
-    .container{
+    .container {
         margin: 10px;
     }
-    #fimg{
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 10rem;
+    #fimg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10rem;
     }
-    img{
-        
+    img {
         width: 9rem;
         height: 9rem;
         border: 2px solid white;
         border-radius: 5px;
     }
-    h4{
-     font-family: 'Courgette', cursive;
+    h4 {
+        font-family: 'Courgette', cursive;
     }
+
     a{
-      background-color: white;
-      color: #ff51a2;
-      padding: 5px;
-      height: 3rem;
-      border-radius: 5px;
-      width: 13rem;
+        text-decoration: none;
     }
-    #chatlink{
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 10rem;
+    button {
+        background-color: white;
+        color: #ff51a2;
+        border-radius: 5px;
+        display: block;
+        cursor: pointer;
+        width: 150%;
+        &:hover {
+            color: white;
+            background-color: #ff51a2;
+        }
     }
-    .row{
-     div{
-         // border: 1px black solid;
-     }
- }
- 
- }
+    .row {
+        div {
+            // border: 1px black solid;
+        }
+    }
+}

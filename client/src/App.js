@@ -158,6 +158,7 @@ class App extends React.Component {
           isLoggedIn={this.state.isLoggedIn ? true : false}
           friendslist={this.state.friendslist}
           handleFriendsByUser={this.handleFriendsByUser}
+          handleInterests={this.handleInterests}
           interestlist={this.state.interestlist}
           {...props} />)} />
       </div>

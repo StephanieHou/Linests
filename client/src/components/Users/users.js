@@ -5,12 +5,15 @@ import $ from 'jquery';
 import Navigation from '../Navigation/navigation';
 import Friendlist from './friendlist'
 import Matchlist from './matchlist'
+import Chatroomlist from './chatroom'
 
 import './users.scss';
 import Api from "../Api/Api";
 import swal from 'sweetalert'
+import axios from 'axios';
+import { get } from "http";
 
-const Account = ({ city, state, education, gender, month, date, interests, onToggle }) => {
+const Account = ({ city, state, education, gender, month, date, interests, onToggle, addInterest }) => {
     return (
         <div class="compinfo">
             <div class="comphead">
@@ -38,45 +41,50 @@ const Account = ({ city, state, education, gender, month, date, interests, onTog
                         </div>
                     ))}
                 </div>
-                <input type="submit" id="intsubmit" />
+                <input type="submit" id="intsubmit" onClick={() => { addInterest() }} />
             </div>
         </div>
     );
 };
 
-const Matches = ({ matches }) => {
+const Matches = ({ matches, addFriend, userid, getChat }) => {
     return (
         <div class="compinfo">
             <div class="comphead">
                 <h3>Matches</h3>
             </div>
             <div class="info">
-                <Matchlist matches={matches} />
+                <Matchlist matches={matches} addFriend={addFriend} userid={userid} getChat={getChat} />
             </div>
         </div>
     );
 };
 
-const Friends = ({ friends }) => {
+const Friends = ({ friends, userid, getChat }) => {
     return (
         <div class="compinfo">
             <div class="comphead">
                 <h3>Friends</h3>
             </div>
             <div class="info">
-                <Friendlist friends={friends} />
+                <Friendlist friends={friends} userid={userid} getChat={getChat} />
             </div>
         </div>
     );
 };
 
-const Chatroom = ({ photo, name, about, location, birthday, facebook, chat }) => {
+const Chatroom = ({ messages, addMessages, userid, handleMessageInput, newmessage }) => {
+    console.log(newmessage)
+    var otherids = messages.filter(message => message.user_id !== userid).map(item => item.user_id);
+    var otherid = otherids[0];
+    console.log(otherid)
     return (
         <div class="compinfo">
             <div class="comphead">
                 <h3>Chatroom</h3>
             </div>
             <div class="info">
+                <Chatroomlist userid={userid} messages={messages} newmessage={newmessage} addMessages={addMessages} handleMessageInput={handleMessageInput} otherid={otherid} />
             </div>
         </div>
     );
@@ -103,21 +111,21 @@ const Settings = ({ about, address, city, state, date, month, year, email, passw
                         <input type="text" placeholder={city}></input>
                     </label>
                     <br />
-                    <input type="submit" value="Submit Changes"/>
+                    <input type="submit" value="Submit Changes" />
                 </form>
             </div>
-            </div>
-            );
-        };
-        
-        
-        
+        </div>
+    );
+};
+
+
+
 class Users extends React.Component {
-                constructor(props) {
-            super(props);
+    constructor(props) {
+        super(props);
         this.state = {
-                //main
-                photo: "",
+            //main
+            photo: "",
             name: "",
             about: "",
             location: "",
@@ -125,302 +133,312 @@ class Users extends React.Component {
             facebook: "",
             //account
             interests: [
-                {text: 'Art', checked: false },
-                {text: 'Basketball', checked: false },
-                {text: 'Dance', checked: false },
-                {text: 'EDM', checked: false },
-                {text: 'Fashion', checked: false },
-                {text: 'Football', checked: false },
-                {text: 'Music', checked: false },
-                {text: 'Photography', checked: false },
-                {text: 'Volleyball', checked: false },
-        ],
-        selected: [],
-        //matches
-        matches: [],
-        //settings
-        username: "",
-        password: "",
-        cpassword: "",
-    };
-}
+                { text: 'Art', checked: false },
+                { text: 'Basketball', checked: false },
+                { text: 'Dance', checked: false },
+                { text: 'EDM', checked: false },
+                { text: 'Fashion', checked: false },
+                { text: 'Football', checked: false },
+                { text: 'Music', checked: false },
+                { text: 'Photography', checked: false },
+                { text: 'Volleyball', checked: false },
+                { text: 'Baseball', checked: false },
+                { text: 'Gaming', checked: false },
+                { text: 'Surfing', checked: false },
+                { text: 'Hiking', checked: false },
+                { text: 'Cooking', checked: false },
+                { text: 'Anime', checked: false },
+            ],
+            selected: [],
+            //matches
+            matches: [],
+            //settings
+            username: "",
+            password: "",
+            cpassword: "",
+            //chatroom
+            messages: [],
+            newmessage: ""
+        };
+    }
 
     componentWillMount() {
-                // setTimeout(() => this.setState({ loading: false }), 1500);
-                $(document).ready(function () {
-                    $("#sidebarCollapse").on("click", function () {
-                        $("#sidebar").toggleClass("active");
-                        $(this).toggleClass("active");
-                        $("#sidebar").trigger('click')
-                    });
-                });
-            $(document).ready(function () {
-                $("#sidebarCollapse").click(function () {
-                    $(".cal").toggle();
-                });
-            });
-    
-            // Calendar
+        this.updateInterests();
+        // setTimeout(() => this.setState({ loading: false }), 1500);
         $(document).ready(function () {
-                function c(passed_month, passed_year, calNum) {
-                    var calendar = calNum === 0 ? calendars.cal1 : calendars.cal2;
-                    makeWeek(calendar.weekline);
-                    calendar.datesBody.empty();
-                    var calMonthArray = makeMonthArray(passed_month, passed_year);
-                    var r = 0;
-                    var u = false;
-                    while (!u) {
-                        if (daysArray[r] === calMonthArray[0].weekday) {
-                            u = true
-                        } else {
-                            calendar.datesBody.append('<div class="blank"></div>');
-                            r++;
-                        }
+            $("#sidebarCollapse").on("click", function () {
+                $("#sidebar").toggleClass("active");
+                $(this).toggleClass("active");
+                $("#sidebar").trigger('click')
+            });
+        });
+        $(document).ready(function () {
+            $("#sidebarCollapse").click(function () {
+                $(".cal").toggle();
+            });
+        });
+
+        // Calendar
+        $(document).ready(function () {
+            function c(passed_month, passed_year, calNum) {
+                var calendar = calNum === 0 ? calendars.cal1 : calendars.cal2;
+                makeWeek(calendar.weekline);
+                calendar.datesBody.empty();
+                var calMonthArray = makeMonthArray(passed_month, passed_year);
+                var r = 0;
+                var u = false;
+                while (!u) {
+                    if (daysArray[r] === calMonthArray[0].weekday) {
+                        u = true
+                    } else {
+                        calendar.datesBody.append('<div class="blank"></div>');
+                        r++;
                     }
-                    for (var cell = 0; cell < 42 - r; cell++) {
-                        if (cell >= calMonthArray.length) {
-                            calendar.datesBody.append('<div class="blank"></div>');
+                }
+                for (var cell = 0; cell < 42 - r; cell++) {
+                    if (cell >= calMonthArray.length) {
+                        calendar.datesBody.append('<div class="blank"></div>');
+                    } else {
+                        var shownDate = calMonthArray[cell].day;
+                        var iter_date = new Date(passed_year, passed_month, shownDate);
+                        if (
+                            (
+                                (shownDate !== today.getDate() && passed_month === today.getMonth()) || passed_month !== today.getMonth()) && iter_date < today) {
+                            var m = '<div class="past-date">';
                         } else {
-                            var shownDate = calMonthArray[cell].day;
-                            var iter_date = new Date(passed_year, passed_month, shownDate);
-                            if (
-                                (
-                                    (shownDate !== today.getDate() && passed_month === today.getMonth()) || passed_month !== today.getMonth()) && iter_date < today) {
-                                var m = '<div class="past-date">';
-                            } else {
-                                var m = checkToday(iter_date) ? '<div class="today">' : "<div>";
-                            }
-                            calendar.datesBody.append(m + shownDate + "</div>");
+                            var m = checkToday(iter_date) ? '<div class="today">' : "<div>";
                         }
+                        calendar.datesBody.append(m + shownDate + "</div>");
                     }
+                }
 
-                    var color = "#444444";
-                    calendar.calHeader.find("h2").text(i[passed_month] + " " + passed_year);
-                    calendar.weekline.find("div").css("color", color);
-                    calendar.datesBody.find(".today").css("color", "#ff51a2");
+                var color = "#444444";
+                calendar.calHeader.find("h2").text(i[passed_month] + " " + passed_year);
+                calendar.weekline.find("div").css("color", color);
+                calendar.datesBody.find(".today").css("color", "#ff51a2");
 
-                    var clicked = false;
-                    selectDates(selected);
+                var clicked = false;
+                selectDates(selected);
 
-                    clickedElement = calendar.datesBody.find('div');
-                    clickedElement.on("click", function () {
-                        clicked = $(this);
-                        var whichCalendar = calendar.name;
+                clickedElement = calendar.datesBody.find('div');
+                clickedElement.on("click", function () {
+                    clicked = $(this);
+                    var whichCalendar = calendar.name;
 
-                        if (firstClick && secondClick) {
-                            thirdClicked = getClickedInfo(clicked, calendar);
-                            var firstClickDateObj = new Date(firstClicked.year,
-                                firstClicked.month,
-                                firstClicked.date);
-                            var secondClickDateObj = new Date(secondClicked.year,
-                                secondClicked.month,
-                                secondClicked.date);
-                            var thirdClickDateObj = new Date(thirdClicked.year,
-                                thirdClicked.month,
-                                thirdClicked.date);
-                            if (secondClickDateObj > thirdClickDateObj && thirdClickDateObj > firstClickDateObj) {
-                                secondClicked = thirdClicked;
+                    if (firstClick && secondClick) {
+                        thirdClicked = getClickedInfo(clicked, calendar);
+                        var firstClickDateObj = new Date(firstClicked.year,
+                            firstClicked.month,
+                            firstClicked.date);
+                        var secondClickDateObj = new Date(secondClicked.year,
+                            secondClicked.month,
+                            secondClicked.date);
+                        var thirdClickDateObj = new Date(thirdClicked.year,
+                            thirdClicked.month,
+                            thirdClicked.date);
+                        if (secondClickDateObj > thirdClickDateObj && thirdClickDateObj > firstClickDateObj) {
+                            secondClicked = thirdClicked;
 
-                                bothCals.find(".calendar_content").find("div").each(function () {
-                                    $(this).removeClass("selected");
-                                });
-                                selected = {};
-                                selected[firstClicked.year] = {};
-                                selected[firstClicked.year][firstClicked.month] = [firstClicked.date];
-                                selected = addChosenDates(firstClicked, secondClicked, selected);
-                            } else {
-                                selected = {};
-                                firstClicked = [];
-                                secondClicked = [];
-                                firstClick = false;
-                                secondClick = false;
-                                bothCals.find(".calendar_content").find("div").each(function () {
-                                    $(this).removeClass("selected");
-                                });
-                            }
-                        }
-                        if (!firstClick) {
-                            firstClick = true;
-                            firstClicked = getClickedInfo(clicked, calendar);
+                            bothCals.find(".calendar_content").find("div").each(function () {
+                                $(this).removeClass("selected");
+                            });
+                            selected = {};
                             selected[firstClicked.year] = {};
                             selected[firstClicked.year][firstClicked.month] = [firstClicked.date];
-                        } else {
-                            secondClick = true;
-                            secondClicked = getClickedInfo(clicked, calendar);
-
-                            var firstClickDateObj = new Date(firstClicked.year,
-                                firstClicked.month,
-                                firstClicked.date);
-                            var secondClickDateObj = new Date(secondClicked.year,
-                                secondClicked.month,
-                                secondClicked.date);
-
-                            if (firstClickDateObj > secondClickDateObj) {
-
-                                var cachedClickedInfo = secondClicked;
-                                secondClicked = firstClicked;
-                                firstClicked = cachedClickedInfo;
-                                selected = {};
-                                selected[firstClicked.year] = {};
-                                selected[firstClicked.year][firstClicked.month] = [firstClicked.date];
-
-                            } else if (firstClickDateObj.getTime() === secondClickDateObj.getTime()) {
-                                selected = {};
-                                firstClicked = [];
-                                secondClicked = [];
-                                firstClick = false;
-                                secondClick = false;
-                                $(this).removeClass("selected");
-                            }
                             selected = addChosenDates(firstClicked, secondClicked, selected);
+                        } else {
+                            selected = {};
+                            firstClicked = [];
+                            secondClicked = [];
+                            firstClick = false;
+                            secondClick = false;
+                            bothCals.find(".calendar_content").find("div").each(function () {
+                                $(this).removeClass("selected");
+                            });
                         }
-                        selectDates(selected);
-                    });
+                    }
+                    if (!firstClick) {
+                        firstClick = true;
+                        firstClicked = getClickedInfo(clicked, calendar);
+                        selected[firstClicked.year] = {};
+                        selected[firstClicked.year][firstClicked.month] = [firstClicked.date];
+                    } else {
+                        secondClick = true;
+                        secondClicked = getClickedInfo(clicked, calendar);
 
-                }
+                        var firstClickDateObj = new Date(firstClicked.year,
+                            firstClicked.month,
+                            firstClicked.date);
+                        var secondClickDateObj = new Date(secondClicked.year,
+                            secondClicked.month,
+                            secondClicked.date);
+
+                        if (firstClickDateObj > secondClickDateObj) {
+
+                            var cachedClickedInfo = secondClicked;
+                            secondClicked = firstClicked;
+                            firstClicked = cachedClickedInfo;
+                            selected = {};
+                            selected[firstClicked.year] = {};
+                            selected[firstClicked.year][firstClicked.month] = [firstClicked.date];
+
+                        } else if (firstClickDateObj.getTime() === secondClickDateObj.getTime()) {
+                            selected = {};
+                            firstClicked = [];
+                            secondClicked = [];
+                            firstClick = false;
+                            secondClick = false;
+                            $(this).removeClass("selected");
+                        }
+                        selected = addChosenDates(firstClicked, secondClicked, selected);
+                    }
+                    selectDates(selected);
+                });
+
+            }
 
             function selectDates(selected) {
                 if (!$.isEmptyObject(selected)) {
                     var dateElements1 = datesBody1.find('div');
-            var dateElements2 = datesBody2.find('div');
+                    var dateElements2 = datesBody2.find('div');
 
                     function highlightDates(passed_year, passed_month, dateElements) {
                         if (passed_year in selected && passed_month in selected[passed_year]) {
                             var daysToCompare = selected[passed_year][passed_month];
                             for (var d in daysToCompare) {
-                dateElements.each(function (index) {
-                    if (parseInt($(this).text()) === daysToCompare[d]) {
-                        $(this).addClass('selected');
-                    }
-                });
-            }
+                                dateElements.each(function (index) {
+                                    if (parseInt($(this).text()) === daysToCompare[d]) {
+                                        $(this).addClass('selected');
+                                    }
+                                });
+                            }
 
-        }
-    }
-    highlightDates(year, month, dateElements1);
-    highlightDates(nextYear, nextMonth, dateElements2);
-}
-}
+                        }
+                    }
+                    highlightDates(year, month, dateElements1);
+                    highlightDates(nextYear, nextMonth, dateElements2);
+                }
+            }
 
             function makeMonthArray(passed_month, passed_year) {
                 var e = [];
                 for (var r = 1; r < getDaysInMonth(passed_year, passed_month) + 1; r++) {
-                e.push({
-                    day: r,
-                    weekday: daysArray[getWeekdayNum(passed_year, passed_month, r)]
-                });
+                    e.push({
+                        day: r,
+                        weekday: daysArray[getWeekdayNum(passed_year, passed_month, r)]
+                    });
+                }
+                return e;
             }
-            return e;
-        }
 
             function makeWeek(week) {
                 week.empty();
-            for (var e = 0; e < 7; e++) {
-                week.append("<div>" + daysArray[e].substring(0, 3) + "</div>")
-            }
+                for (var e = 0; e < 7; e++) {
+                    week.append("<div>" + daysArray[e].substring(0, 3) + "</div>")
+                }
             }
 
             function getDaysInMonth(currentYear, currentMon) {
                 return (new Date(currentYear, currentMon + 1, 0)).getDate();
-        }
+            }
 
             function getWeekdayNum(e, t, n) {
                 return (new Date(e, t, n)).getDay();
-        }
+            }
 
             function checkToday(e) {
                 var todayDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
-            var checkingDate = e.getFullYear() + '/' + (e.getMonth() + 1) + '/' + e.getDate();
-            return todayDate === checkingDate;
+                var checkingDate = e.getFullYear() + '/' + (e.getMonth() + 1) + '/' + e.getDate();
+                return todayDate === checkingDate;
 
-        }
+            }
 
             function getAdjacentMonth(curr_month, curr_year, direction) {
                 var theNextMonth;
-            var theNextYear;
+                var theNextYear;
                 if (direction === "next") {
-                theNextMonth = (curr_month + 1) % 12;
-            theNextYear = (curr_month === 11) ? curr_year + 1 : curr_year;
+                    theNextMonth = (curr_month + 1) % 12;
+                    theNextYear = (curr_month === 11) ? curr_year + 1 : curr_year;
                 } else {
-                theNextMonth = (curr_month === 0) ? 11 : curr_month - 1;
-            theNextYear = (curr_month === 0) ? curr_year - 1 : curr_year;
-        }
-        return [theNextMonth, theNextYear];
-    }
+                    theNextMonth = (curr_month === 0) ? 11 : curr_month - 1;
+                    theNextYear = (curr_month === 0) ? curr_year - 1 : curr_year;
+                }
+                return [theNextMonth, theNextYear];
+            }
 
             function b() {
                 today = new Date;
-            year = today.getFullYear();
-            month = today.getMonth();
-            var nextDates = getAdjacentMonth(month, year, "next");
-            nextMonth = nextDates[0];
-            nextYear = nextDates[1];
-        }
+                year = today.getFullYear();
+                month = today.getMonth();
+                var nextDates = getAdjacentMonth(month, year, "next");
+                nextMonth = nextDates[0];
+                nextYear = nextDates[1];
+            }
 
-        var today;
-        var year,
-            month,
-            nextMonth,
-            nextYear;
+            var today;
+            var year,
+                month,
+                nextMonth,
+                nextYear;
 
-        var i = [
-            "JANUARY",
-            "FEBRUARY",
-            "MARCH",
-            "APRIL",
-            "MAY",
-            "JUNE",
-            "JULY",
-            "AUGUST",
-            "SEPTEMBER",
-            "OCTOBER",
-            "NOVEMBER",
-            "DECEMBER"];
-        var daysArray = [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday"];
+            var i = [
+                "JANUARY",
+                "FEBRUARY",
+                "MARCH",
+                "APRIL",
+                "MAY",
+                "JUNE",
+                "JULY",
+                "AUGUST",
+                "SEPTEMBER",
+                "OCTOBER",
+                "NOVEMBER",
+                "DECEMBER"];
+            var daysArray = [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"];
 
-        var cal1 = $("#calendar_first");
-        var calHeader1 = cal1.find(".calendar_header");
-        var weekline1 = cal1.find(".calendar_weekdays");
-        var datesBody1 = cal1.find(".calendar_content");
+            var cal1 = $("#calendar_first");
+            var calHeader1 = cal1.find(".calendar_header");
+            var weekline1 = cal1.find(".calendar_weekdays");
+            var datesBody1 = cal1.find(".calendar_content");
 
-        var cal2 = $("#calendar_second");
-        var calHeader2 = cal2.find(".calendar_header");
-        var weekline2 = cal2.find(".calendar_weekdays");
-        var datesBody2 = cal2.find(".calendar_content");
+            var cal2 = $("#calendar_second");
+            var calHeader2 = cal2.find(".calendar_header");
+            var weekline2 = cal2.find(".calendar_weekdays");
+            var datesBody2 = cal2.find(".calendar_content");
 
-        var bothCals = $(".calendar");
+            var bothCals = $(".calendar");
 
-        var switchButton = bothCals.find(".calendar_header").find('.switch-month');
+            var switchButton = bothCals.find(".calendar_header").find('.switch-month');
 
             var calendars = {
                 "cal1": {
-                "name": "first",
-            "calHeader": calHeader1,
-            "weekline": weekline1,
-            "datesBody": datesBody1
-        },
+                    "name": "first",
+                    "calHeader": calHeader1,
+                    "weekline": weekline1,
+                    "datesBody": datesBody1
+                },
                 "cal2": {
-                "name": "second",
-            "calHeader": calHeader2,
-            "weekline": weekline2,
-            "datesBody": datesBody2
-        }
-    }
+                    "name": "second",
+                    "calHeader": calHeader2,
+                    "weekline": weekline2,
+                    "datesBody": datesBody2
+                }
+            }
 
 
-    var clickedElement;
-    var firstClicked,
-        secondClicked,
-        thirdClicked;
-    var firstClick = false;
-    var secondClick = false;
+            var clickedElement;
+            var firstClicked,
+                secondClicked,
+                thirdClicked;
+            var firstClick = false;
+            var secondClick = false;
             var selected = {};
 
             b();
@@ -430,146 +448,266 @@ class Users extends React.Component {
                 var clicked = $(this);
                 var generateCalendars = function (e) {
                     var nextDatesFirst = getAdjacentMonth(month, year, e);
-            var nextDatesSecond = getAdjacentMonth(nextMonth, nextYear, e);
-            month = nextDatesFirst[0];
-            year = nextDatesFirst[1];
-            nextMonth = nextDatesSecond[0];
-            nextYear = nextDatesSecond[1];
+                    var nextDatesSecond = getAdjacentMonth(nextMonth, nextYear, e);
+                    month = nextDatesFirst[0];
+                    year = nextDatesFirst[1];
+                    nextMonth = nextDatesSecond[0];
+                    nextYear = nextDatesSecond[1];
 
-            c(month, year, 0);
-            c(nextMonth, nextYear, 1);
-        };
+                    c(month, year, 0);
+                    c(nextMonth, nextYear, 1);
+                };
                 if (clicked.attr("class").indexOf("left") !== -1) {
-                generateCalendars("previous");
-            } else {
-                generateCalendars("next");
-            }
-            clickedElement = bothCals.find(".calendar_content").find("div");
-        });
+                    generateCalendars("previous");
+                } else {
+                    generateCalendars("next");
+                }
+                clickedElement = bothCals.find(".calendar_content").find("div");
+            });
 
             function getClickedInfo(element, calendar) {
                 var clickedInfo = {};
-            var clickedCalendar,
-                clickedMonth,
-                clickedYear;
-            clickedCalendar = calendar.name;
-            clickedMonth = clickedCalendar === "first" ? month : nextMonth;
-            clickedYear = clickedCalendar === "first" ? year : nextYear;
+                var clickedCalendar,
+                    clickedMonth,
+                    clickedYear;
+                clickedCalendar = calendar.name;
+                clickedMonth = clickedCalendar === "first" ? month : nextMonth;
+                clickedYear = clickedCalendar === "first" ? year : nextYear;
                 clickedInfo = {
-                "calNum": clickedCalendar,
-            "date": parseInt(element.text()),
-            "month": clickedMonth,
-            "year": clickedYear
-        }
-        return clickedInfo;
-    }
+                    "calNum": clickedCalendar,
+                    "date": parseInt(element.text()),
+                    "month": clickedMonth,
+                    "year": clickedYear
+                }
+                return clickedInfo;
+            }
 
             function addChosenDates(firstClicked, secondClicked, selected) {
                 if (secondClicked.date > firstClicked.date || secondClicked.month > firstClicked.month || secondClicked.year > firstClicked.year) {
 
                     var added_year = secondClicked.year;
-            var added_month = secondClicked.month;
-            var added_date = secondClicked.date;
+                    var added_month = secondClicked.month;
+                    var added_date = secondClicked.date;
 
                     if (added_year > firstClicked.year) {
-                selected[added_year] = {};
-            selected[added_year][added_month] = [];
-            for (var i = 1;
+                        selected[added_year] = {};
+                        selected[added_year][added_month] = [];
+                        for (var i = 1;
                             i <= secondClicked.date;
                             i++) {
-                selected[added_year][added_month].push(i);
-            }
+                            selected[added_year][added_month].push(i);
+                        }
 
-            added_month = added_month - 1;
+                        added_month = added_month - 1;
                         while (added_month >= 0) {
-                selected[added_year][added_month] = [];
-            for (var i = 1;
+                            selected[added_year][added_month] = [];
+                            for (var i = 1;
                                 i <= getDaysInMonth(added_year, added_month);
                                 i++) {
-                selected[added_year][added_month].push(i);
-            }
-            added_month = added_month - 1;
-        }
+                                selected[added_year][added_month].push(i);
+                            }
+                            added_month = added_month - 1;
+                        }
 
-        added_year = added_year - 1;
-        added_month = 11;
-        added_date = getDaysInMonth(added_year, added_month);
+                        added_year = added_year - 1;
+                        added_month = 11;
+                        added_date = getDaysInMonth(added_year, added_month);
 
                         while (added_year > firstClicked.year) {
-                selected[added_year] = {};
-            for (var i = 0; i < 12; i++) {
-                selected[added_year][i] = [];
-            for (var d = 1; d <= getDaysInMonth(added_year, i); d++) {
-                selected[added_year][i].push(d);
-            }
-        }
-        added_year = added_year - 1;
-    }
-}
+                            selected[added_year] = {};
+                            for (var i = 0; i < 12; i++) {
+                                selected[added_year][i] = [];
+                                for (var d = 1; d <= getDaysInMonth(added_year, i); d++) {
+                                    selected[added_year][i].push(d);
+                                }
+                            }
+                            added_year = added_year - 1;
+                        }
+                    }
 
                     if (added_month > firstClicked.month) {
                         if (firstClicked.year === secondClicked.year) {
-                selected[added_year][added_month] = [];
-            for (var i = 1;
+                            selected[added_year][added_month] = [];
+                            for (var i = 1;
                                 i <= secondClicked.date;
                                 i++) {
-                selected[added_year][added_month].push(i);
-            }
-            added_month = added_month - 1;
-        }
+                                selected[added_year][added_month].push(i);
+                            }
+                            added_month = added_month - 1;
+                        }
                         while (added_month > firstClicked.month) {
-                selected[added_year][added_month] = [];
-            for (var i = 1;
+                            selected[added_year][added_month] = [];
+                            for (var i = 1;
                                 i <= getDaysInMonth(added_year, added_month);
                                 i++) {
-                selected[added_year][added_month].push(i);
-            }
-            added_month = added_month - 1;
-        }
-        added_date = getDaysInMonth(added_year, added_month);
-    }
+                                selected[added_year][added_month].push(i);
+                            }
+                            added_month = added_month - 1;
+                        }
+                        added_date = getDaysInMonth(added_year, added_month);
+                    }
 
-    for (var i = firstClicked.date + 1;
+                    for (var i = firstClicked.date + 1;
                         i <= added_date;
                         i++) {
-                selected[added_year][added_month].push(i);
+                        selected[added_year][added_month].push(i);
+                    }
+                }
+                return selected;
             }
-        }
-        return selected;
+        });
     }
-});
-}
 
     onToggle = (index, e) => {
-                let newItems = this.state.interests.slice();
-            newItems[index].checked = !newItems[index].checked
-            let checkedItems = newItems.filter(item => item.checked);
+        let newItems = this.state.interests.slice();
+        newItems[index].checked = !newItems[index].checked
+        let checkedItems = newItems.filter(item => item.checked).map(item => item.text);
         this.setState({
-                interests: newItems,
+            interests: newItems,
             selected: checkedItems
         })
     }
 
+    updateInterests = () => {
+        let newItems = this.state.interests.slice();
+        console.log(this.props.interestlist)
+        var userinterest = this.props.interestlist.filter(interest => interest.user_id === this.props.loggedUser_id).map(interest => interest.passion);
+        for (var i = 0; i < newItems.length; i++) {
+            if (userinterest.includes(newItems[i].text)) {
+                newItems[i].checked = true;
+            }
+        }
+        this.setState({
+            interests: newItems
+        })
+    }
+
     handleLogout = () => {
-                Api.getLogout();
-            console.log("You have logout!");
-            this.props.handleLogin("");
-            this.props.history.push("/login");
+        Api.getLogout();
+        console.log("You have logout!");
+        this.props.handleLogin("");
+        this.props.history.push("/login");
         swal({
-                title: "You Have Been Logged Out",
+            title: "You Have Been Logged Out",
             text: "We hope to see you again!"
         });
     };
 
+    submitInterest = () => {
+        Api.deleteInterestsByUser(this.props.loggedUser_id)
+            .then(response => {
+                console.log("Delete Interest")
+            })
+            .then(response => {
+                this.addInterests();
+            })
+            .catch(err => {
+                console.log("Error: ", err);
+            })
+        swal({
+            title: "You Have Submitted Your Interests!",
+            text: "Look At Your New Matches"
+        });
+
+    };
+
+    addInterests = () => {
+        this.state.selected.forEach((interest) => (
+            axios
+                .post("/api/newinterest", {
+                    user_id: this.props.loggedUser_id,
+                    passion: interest
+                })
+                .then(res => {
+                    console.log("Added Interest")
+                })
+                .then(() => {
+                    this.props.handleInterests();
+                })
+                .catch(err => {
+                    console.log("Error")
+                })
+        )
+        )
+    }
+
+    addFriend = (id) => {
+        axios
+            .post("/api/newfriend", {
+                user_id: this.props.loggedUser_id,
+                added_id: id
+
+            })
+            .then(res => {
+                swal({
+                    text: "Friend Added"
+                });
+            })
+            .then((id) => {
+                this.props.handleFriendsByUser(this.props.loggedUser_id)
+            })
+            .catch(err => {
+                swal({
+                    text: "Error"
+                });
+            });
+    }
+
+    getChat = (id, otherid) => {
+        Api.getChatMessages(id, otherid)
+            .then(response => {
+                console.log("Response: ", response);
+                console.log("Response Data: ", response.data);
+                this.setState({
+                    messages: response.data.data,
+                });
+            })
+            .catch(err => {
+                console.log("Error: ", err);
+            });
+    };
+
+    addMessages = (id) => {
+        var userid = id;
+        axios
+            .post("/api/newmessage", {
+                user_id: this.props.loggedUser_id,
+                otheruser_id: id,
+                messages: this.state.newmessage
+            })
+            .then(res => {
+                this.setState({
+                    newmessage: "",
+                });
+            })
+            .then(res => {
+                this.getChat(this.props.loggedUser_id, userid)
+            })
+            .catch(err => {
+                swal({
+                    text: "Error"
+                });
+            });
+    }
+
+    handleMessageInput = e => {
+        this.setState({
+            newmessage: e.target.value
+        });
+    };
+
+
     renderUserProfile = () => {
-        const {photo, name, about, interests, email, password, cpassword } = this.state;
-            var userinterest = this.props.interestlist.filter(interest => interest.user_id === this.props.loggedUser_id).map(interest => interest.passion)
-            console.log(userinterest)
-            var friends = this.props.friendslist.map(friend => friend.user_id)
-            console.log(friends)
-            var matcharr = this.props.interestlist.filter(interest => userinterest.includes(interest.passion) && interest.user_id !== this.props.loggedUser_id && !friends.includes(interest.user_id));
-            console.log(matcharr)
-            return (
+        const { photo, name, about, interests, email, password, cpassword, messages, newmessage } = this.state;
+        var userinterest = this.props.interestlist.filter(interest => interest.user_id === this.props.loggedUser_id).map(interest => interest.passion);
+        var friends = this.props.friendslist.map(friend => friend.user_id);
+        var matching = this.props.interestlist.filter(interest => userinterest.includes(interest.passion) && interest.user_id !== this.props.loggedUser_id && !friends.includes(interest.user_id));
+        var matcharr = matching.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+                t.user_id === thing.user_id
+            ))
+        )
+        return (
             <div id="users">
                 <div class="wrapper">
                     <nav id="sidebar">
@@ -615,22 +753,22 @@ class Users extends React.Component {
                                             <Route
                                                 exact
                                                 path="/userprofile/account"
-                                                component={() => <Account photo={photo} city={this.props.loggedCity} state={this.props.loggedState} education={this.props.loggedEducation} gender={this.props.loggedGender} month={this.props.loggedBirthmonth} date={this.props.loggedBirthdate} interests={interests} onToggle={this.onToggle} />}
+                                                component={() => <Account photo={photo} city={this.props.loggedCity} state={this.props.loggedState} education={this.props.loggedEducation} gender={this.props.loggedGender} month={this.props.loggedBirthmonth} date={this.props.loggedBirthdate} interests={interests} onToggle={this.onToggle} addInterest={this.submitInterest} />}
                                             />
                                             <Route
                                                 exact
                                                 path="/userprofile/matches"
-                                                component={() => <Matches matches={matcharr} />}
+                                                component={() => <Matches matches={matcharr} addFriend={this.addFriend} userid={this.props.loggedUser_id} getChat={this.getChat} />}
                                             />
                                             <Route
                                                 exact
                                                 path="/userprofile/friends"
-                                                component={() => <Friends friends={this.props.friendslist} />}
+                                                component={() => <Friends friends={this.props.friendslist} userid={this.props.loggedUser_id} getChat={this.getChat} />}
                                             />
                                             <Route
                                                 exact
                                                 path="/userprofile/chatroom"
-                                                component={() => <Chatroom />}
+                                                component={() => <Chatroom messages={messages} handleMessageInput={this.handleMessageInput} userid={this.props.loggedUser_id} addMessages={this.addMessages} newmessage={newmessage} />}
                                             />
                                             <Route
                                                 exact
@@ -663,9 +801,9 @@ class Users extends React.Component {
                     </div>
                 </div>
             </div>
-            );
-        };
-    
+        );
+    };
+
     render() {
         return (
             <div>
@@ -673,8 +811,8 @@ class Users extends React.Component {
                     <Route path="/userprofile" render={this.renderUserProfile} />
                 </Switch>
             </div>
-            );
-        }
+        );
     }
-    
+}
+
 export default Users;

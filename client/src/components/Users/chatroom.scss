@@ -1,0 +1,60 @@
+.chatroom{
+    // border: 1px solid black;
+    width: 42vw;
+    height: 88%;
+    overflow-x: scroll;
+    .row{
+        width: 42vw;
+    }
+    .container{
+        width: 42vw;
+    }
+}
+
+.otheruser{
+    // border: 1px solid red;
+    width: 42vw;
+    padding: 2px;
+    p{
+        background-color:#ff51a2;
+        padding: 5px;
+        color: white;
+        width: 10rem;
+        border-radius: 5px;
+
+    }
+}
+
+.loggeduser{
+    // border: 1px solid blue;
+    width: 42vw;
+    padding: 2px;
+    p{
+        float:right;
+        background-color:blue;
+        padding: 5px;
+        margin-right: 20px;
+        color: white;
+        width: 10rem;
+        border-radius: 5px;
+
+    }
+}
+
+.chatinput{
+    //  border: 1px solid blue;
+     position:absolute;
+     bottom: 0;
+    //  width: 100%;
+     input{
+        width: 500px;
+        height: 40px;
+        border-radius: 5px;
+     }
+     button{
+        border-radius: 5px;
+        height: 40px;
+        background-color:#ff51a2;
+        color: white;
+     }
+}

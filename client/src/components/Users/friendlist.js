@@ -7,7 +7,7 @@ import Test from '../Images/Gaming.jpeg'
 import './friendlist.scss';
 
 
-const Friendlist = ({ friends }) => {
+const Friendlist = ({ friends, getChat, userid }) => {
     console.log("FRIENDS: ", friends);
     return (
         <div>
@@ -26,7 +26,7 @@ const Friendlist = ({ friends }) => {
                                 <p>Location: {friend.city}, {friend.state}</p>
                             </div>
                             <div class="col-xs-2 col-md-1" id="chatlink">
-                                <Link to={`/userprofile/chatroom`}><a>Chat</a> </Link>
+                                <Link to={`/userprofile/chatroom`}><button type="submit" onClick={() => { getChat(userid, friend.user_id) }}>Chat</button> </Link>
                             </div>
                         </div>
                     </div>
